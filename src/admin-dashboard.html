@@ -1,0 +1,1193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Panel | CyberGuard</title>
+
+
+<link rel="stylesheet" href="admin.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+<div class="layout">
+
+<!-- SIDEBAR -->
+<div class="sidebar">
+    <div class="logo">
+        <i class="fa-solid fa-shield-halved"></i>
+        <div>
+            <h3>CyberGuard</h3>
+            <p>Admin Panel</p>
+        </div>
+    </div>
+
+    <ul class="menu">
+        <li class="active" onclick="showPage('dashboard')">
+            <i class="fa fa-home"></i> Dashboard
+        </li>
+        <li onclick="showPage('cases')">
+            <i class="fa fa-folder"></i> Cases
+        </li>
+        <li onclick="showPage('investigators')">
+            <i class="fa fa-user-shield"></i> Investigators
+        </li>
+        <li onclick="showPage('analytics')">
+    <i class="fa fa-chart-line"></i> Analytics
+</li>
+    </ul>
+    <li class="logout-btn" onclick="logoutUser()">
+    <i class="fa fa-sign-out-alt"></i> Logout
+</li>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+<!-- ================= DASHBOARD ================= -->
+<div id="dashboardPage" class="page active">
+
+    <div class="header">
+        <h1>Dashboard Overview</h1>
+        <p>Monitor and manage cybercrime incident reports</p>
+    </div>
+
+    <div class="cards">
+        <div class="card" id="caseManagementCard">
+            <div class="icon blue"><i class="fa fa-chart-line"></i></div>
+            <div><p>Total Reports</p><h2>3</h2></div>
+        </div>
+
+        <div class="card">
+            <div class="icon yellow"><i class="fa fa-clock"></i></div>
+            <div><p>Pending</p><h2>1</h2></div>
+        </div>
+
+        <div class="card">
+            <div class="icon blue-light"><i class="fa fa-search"></i></div>
+            <div><p>Investigating</p><h2>2</h2></div>
+        </div>
+
+        <div class="card">
+            <div class="icon green"><i class="fa fa-check"></i></div>
+            <div><p>Resolved</p><h2>0</h2></div>
+        </div>
+    </div>
+
+    <div class="grid">
+        <div class="box">
+    <h3>Reports by Type</h3>
+
+    <div id="reportsByTypeContainer"></div>
+</div>
+
+        <div class="box">
+    <h3>Recent Reports</h3>
+
+    <div id="recentReportsContainer"></div>
+</div>
+    </div>
+
+</div>
+
+<!-- ================= CASES ================= -->
+<div id="casesPage" class="page">
+
+    <div class="header">
+        <h1>Case Management</h1>
+        <p>View and manage all incident reports</p>
+    </div>
+
+    <div class="box filter-box">
+        <div class="filters">
+
+            <div class="input-group">
+                <label>Search by Case ID</label>
+                <div class="search-box">
+                    <i class="fa fa-search"></i>
+                    <input type="text" id="searchInput" placeholder="Enter Case ID">
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label>Status</label>
+                <select id="statusFilter">
+                    <option value="all">All Status</option>
+                    <option value="pending">Pending</option>
+                    <option value="investigating">Investigating</option>
+                    <option value="resolved">Resolved</option>
+                    <option value="rejected">Rejected</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label>Severity</label>
+                <select id="severityFilter">
+                    <option value="all">All Severity</option>
+                    <option value="Low">Low</option>
+                    <option value="Medium">Medium</option>
+                    <option value="High">High</option>
+                    <option value="Critical">Critical</option>
+                </select>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="box">
+
+        <!-- HEADER -->
+        <div class="table-header">
+            <span>Case ID</span>
+            <span>Type</span>
+            <span>Status</span>
+            <span>Severity</span>
+            <span>Investigator</span>
+            <span>Date</span>
+            <span>Actions</span>
+        </div>
+       
+
+        <!-- DATA CONTAINER -->
+        <div id="casesContainer"></div>
+
+        <!-- EMPTY STATE -->
+        <div id="emptyState" class="empty">
+            <p>No cases found</p>
+        </div>
+
+    </div>
+
+</div>
+
+<!-- ================= VIEW CASE ================= -->
+<div id="viewCasePage" class="page">
+
+    <div class="view-header">
+
+    <div class="left">
+        <h2 id="caseTitle"></h2>
+        <p id="caseSubtitle" class="subtitle"></p>
+    </div>
+
+    <button class="back-btn" onclick="showPage('cases')">
+        <i class="fa fa-arrow-left"></i>
+        Back
+    </button>
+
+</div>
+
+    
+
+    <div class="case-layout">
+
+        <!-- LEFT SIDE -->
+        <div class="case-left">
+
+            <div class="box incident-card">
+
+    <h3 class="card-title">Incident Details</h3>
+
+    <div class="incident-grid">
+
+        <!-- LEFT -->
+        <div class="incident-item">
+            <span class="label">Type</span>
+            <span class="value" id="viewType"></span>
+        </div>
+
+        <!-- RIGHT -->
+        <div class="incident-item">
+            <span class="label">Platform</span>
+            <span class="value" id="viewPlatform"></span>
+        </div>
+
+        <!-- DATE -->
+        <div class="incident-item full">
+            <span class="label">Date & Time</span>
+            <span class="value" id="viewDate"></span>
+        </div>
+
+        <!-- LINE -->
+        <div class="divider"></div>
+
+        <!-- SUMMARY -->
+        <div class="incident-item full">
+            <span class="label">Summary</span>
+            <span class="value" id="viewSummary"></span>
+        </div>
+
+    </div>
+
+</div>
+            <div class="box report-info-card">
+
+    <h3 class="card-title">Report Information</h3>
+
+    <div class="info-grid">
+
+        <!-- LEFT SIDE -->
+        <div class="info-item">
+            <span class="label">Name</span>
+            <span class="value" id="viewName"></span>
+        </div>
+
+        <div class="info-item">
+            <span class="label">Grade Level</span>
+            <span class="value" id="viewGrade"></span>
+        </div>
+
+        <div class="info-item">
+            <span class="label">Contact</span>
+            <span class="value" id="viewContact"></span>
+        </div>
+
+        <div class="info-item">
+            <span class="label">Email</span>
+            <span class="value" id="viewEmail"></span>
+        </div>
+
+        <div class="info-item full">
+            <span class="label">Relationship</span>
+            <span class="value" id="viewRelationship"></span>
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="box suspect-card">
+
+    <h3 class="card-title">Suspect Information</h3>
+
+    <div class="info-grid">
+
+        <!-- LEFT -->
+        <div class="info-item">
+            <span class="label">Name</span>
+            <span class="value" id="viewSuspectName"></span>
+        </div>
+
+        <div class="info-item">
+            <span class="label">Email Address</span>
+            <span class="value" id="viewSuspectEmail"></span>
+        </div>
+
+        <div class="info-item">
+            <span class="label">Phone Number</span>
+            <span class="value" id="viewSuspectPhone"></span>
+        </div>
+
+        <!-- RIGHT -->
+        <div class="info-item">
+            <span class="label">Social Media Accounts</span>
+            <span class="value" id="viewSuspectSocial"></span>
+        </div>
+
+        <div class="info-item">
+            <span class="label">Other Identifiers</span>
+            <span class="value" id="viewSuspectOther"></span>
+        </div>
+
+    </div>
+
+</div>
+
+            
+
+        </div>
+
+        <!-- RIGHT SIDE -->
+        <div class="case-right">
+
+            <div class="box case-card">
+
+    <h3 class="card-title">Case Management</h3>
+
+    <div class="info-grid">
+
+        <!-- STATUS -->
+        <div class="info-item">
+            <span class="label">Status</span>
+            <select id="viewStatus" class="select-field">
+    <option value="pending">Pending</option>
+    <option value="under-review">Under Review</option> <!-- 🔥 NEW -->
+    <option value="investigating">Investigating</option>
+    <option value="resolved">Resolved</option>
+    <option value="rejected">Rejected</option>
+</select>
+        </div>
+
+        <!-- SEVERITY -->
+        <div class="info-item">
+            <span class="label">Severity</span>
+            <select id="viewSeverity" class="select-field">
+                <option value="Low">Low</option>
+                <option value="Medium">Medium</option>
+                <option value="High">High</option>
+                <option value="Critical">Critical</option>
+            </select>
+        </div>
+
+        <!-- INVESTIGATOR -->
+        <div class="info-item">
+            <span class="label">Investigator</span>
+            <select id="viewInvestigator">
+  <option value="">Assigned Investigator</option>
+
+ <option value="Det. Adrian Cruz">Det. Adrian Cruz</option>
+<option value="Det. Maria Santos">Det. Maria Santos</option>
+<option value="Det. Joshua Reyes">Det. Joshua Reyes</option>
+<option value="Det. Andrea Lim">Det. Andrea Lim</option>
+<option value="Det. Carlo Mendoza">Det. Carlo Mendoza</option>
+</select>
+        </div>
+
+        <!-- CASE ID -->
+        <div class="info-item">
+            <span class="label">Case ID</span>
+            <span class="value case-id-value" id="viewCaseId"></span>
+        </div>
+
+        
+
+
+        <!-- ADMIN NOTES -->
+<div class="info-item full-width">
+    <label for="admin-notes">Admin Notes (User)</label>
+    <textarea id="admin-notes" class="textarea-field" placeholder="Enter admin notes here"></textarea>
+</div>
+
+<!-- RESOLUTION -->
+<div class="info-item full-width">
+    <label for="resolution">Admin notes (Investigator)</label>
+    <textarea id="resolution" class="textarea-field" placeholder="Enter admin notes here"></textarea>
+</div>
+
+    </div>
+
+    <!-- SAVE BUTTON -->
+    <button class="save-btn" onclick="saveCaseUpdate()">Save Changes</button>
+
+    
+</div>
+
+<div class="box case-info-card">
+
+    <h3 class="card-title">Case Information</h3>
+
+    <div class="info-grid">
+
+        <!-- LEFT -->
+        <div class="info-item">
+            <span class="label">Created</span>
+            <span class="value" id="viewCreated"></span>
+        </div>
+
+        <div class="info-item">
+            <span class="label">Preferred Contact</span>
+            <span class="value" id="viewPreferred"></span>
+        </div>
+
+        <!-- RIGHT -->
+        <div class="info-item">
+            <span class="label">Last Updated</span>
+            <span class="value" id="viewUpdated"></span>
+        </div>
+
+        <div class="info-item">
+            <span class="label">Availability</span>
+            <span class="value" id="viewAvailability"></span>
+        </div>
+
+        <div class="info-item">
+    <span class="label">Evidence</span>
+    <span class="value evidence-link" id="viewEvidenceBtn">
+    <span id="evidenceCount">0 file(s)</span> • View Evidence
+</span>
+</div>
+        
+
+    </div>
+
+</div>
+
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- ================= INVESTIGATORS ================= -->
+<div id="investigatorsPage" class="page">
+
+    <div class="header">
+        <h1>Investigators</h1>
+        <p>View all assigned investigators and their cases</p>
+    </div>
+
+    <div class="box filter-box">
+        <div class="filters">
+
+            <div class="input-group">
+                <label>Search Investigator</label>
+                <div class="search-box">
+                    <i class="fa fa-search"></i>
+                    <input type="text" id="investigatorSearchInput" placeholder="Enter investigator name">
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="box">
+
+        <!-- HEADER -->
+        <div class="table-header">
+            <span>Investigator</span>
+            <span>Total Cases</span>
+            <span>Under-Review</span>
+            <span>Investigating</span>
+            <span>Resolved</span>
+            <span>Rejected</span>
+            <span>Actions</span>
+        </div>
+
+        <!-- DATA -->
+        <div id="investigatorsContainer"></div>
+
+        <div id="investigatorEmpty" class="empty">
+            <p>No investigators found</p>
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- ================= ANALYTICS ================= -->
+<div id="analyticsPage" class="page">
+
+    <h2 class="analytics-title">Analytics</h2>
+
+    <div class="analytics-grid">
+        <div class="glass-card">
+            <h3>Weekly Reports</h3>
+            <canvas id="weeklyChart"></canvas>
+        </div>
+    </div>
+
+</div>
+
+</div>
+</div>
+
+<div id="previewModal" class="preview-modal">
+    <span class="close-preview">&times;</span>
+    <div class="preview-content" id="previewContent"></div>
+</div>
+
+<!-- MODAL FOR EVIDENCE -->
+<div id="evidenceModal" class="modal">
+  <div class="modal-content evidence-box">
+
+    <div class="modal-header">
+      <h3>Evidence Files</h3>
+      <span class="close-btn" onclick="closeEvidenceModal()">&times;</span>
+    </div>
+
+    <!-- GRID CONTAINER -->
+    <div id="evidenceContainer" class="evidence-grid"></div>
+
+  </div>
+</div>
+
+<!-- ZOOM VIEWER -->
+<div id="zoomViewer" class="zoom-viewer">
+  <span class="close-zoom" onclick="closeZoomViewer()">&times;</span>
+  <div id="zoomContent"></div>
+</div>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+
+    let currentUser = JSON.parse(localStorage.getItem("loggedUser"));
+
+if(!currentUser || currentUser.role !== "admin"){
+  window.location.href = "login.html";
+}
+
+// ================= CORE =================
+function getReports(){
+    return JSON.parse(localStorage.getItem("reports")) || [];
+}
+
+let currentCaseId = null;
+
+// ================= PAGE SWITCH =================
+function showPage(page){
+
+    document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
+    document.querySelectorAll(".menu li").forEach(li => li.classList.remove("active"));
+
+    if(page === "dashboard"){
+        document.getElementById("dashboardPage").classList.add("active");
+        document.querySelectorAll(".menu li")[0].classList.add("active");
+    }
+
+    if(page === "cases"){
+        document.getElementById("casesPage").classList.add("active");
+        document.querySelectorAll(".menu li")[1].classList.add("active");
+        loadAdminCases();
+    }
+
+    if(page === "analytics"){
+        document.getElementById("analyticsPage").classList.add("active");
+        document.querySelectorAll(".menu li")[3].classList.add("active");
+        loadWeeklyChart();
+    }
+
+    if(page === "viewCase"){
+        document.getElementById("viewCasePage").classList.add("active");
+    }
+
+    if(page === "investigators"){
+    document.getElementById("investigatorsPage").classList.add("active");
+    document.querySelectorAll(".menu li")[2].classList.add("active");
+    loadInvestigators();
+    }
+}
+
+// ================= LOAD CASES =================
+function loadAdminCases(){
+
+    const reports = getReports();
+    const container = document.getElementById("casesContainer");
+    const empty = document.getElementById("emptyState");
+
+    if(!container || !empty) return;
+
+    container.innerHTML = "";
+
+    // 🔥 GET FILTER VALUES
+    const search = (document.getElementById("searchInput")?.value || "").toLowerCase();
+    const statusFilter = (document.getElementById("statusFilter")?.value || "all").toLowerCase();
+    const severityFilter = (document.getElementById("severityFilter")?.value || "all").toLowerCase();
+
+    let filtered = reports.filter(r => {
+
+        if(!r) return false;
+
+        const id = (r.id || "").toLowerCase();
+        const type = (r.type || "").toLowerCase();
+        const status = (r.status || "").toLowerCase();
+        const severity = (r.severity || "").toLowerCase();
+
+        // 🔍 SEARCH MATCH
+        const matchSearch =
+            id.includes(search) ||
+            type.includes(search);
+
+        // 📌 STATUS MATCH
+        const matchStatus =
+            statusFilter === "all" ||
+            status === statusFilter;
+
+        // ⚠️ SEVERITY MATCH
+        const matchSeverity =
+            severityFilter === "all" ||
+            severity === severityFilter;
+
+        return matchSearch && matchStatus && matchSeverity;
+    });
+
+    if(filtered.length === 0){
+        empty.style.display = "block";
+        return;
+    }
+
+    empty.style.display = "none";
+
+    filtered
+    .sort((a,b) => new Date(b.createdAt || 0) - new Date(a.createdAt || 0))
+    .forEach(r => {
+
+        const row = document.createElement("div");
+        row.className = "table-row";
+
+        row.innerHTML = `
+            <span>${r.id}</span>
+            <span>${r.type || "N/A"}</span>
+            <span class="badge ${r.status || "pending"}">${r.status || "pending"}</span>
+            <span>${r.severity || "Low"}</span>
+            <span>${r.assignedTo || "—"}</span>
+            <span>${r.date || "N/A"}</span>
+            <button class="action-btn view eye-btn" onclick="viewCase('${r.id}')">
+                <i class="fa-solid fa-eye-slash eye-icon"></i>
+                <span>View</span>
+            </button>
+        `;
+
+        container.appendChild(row);
+    });
+}
+// ================= DASHBOARD STATS =================
+function loadAdminDashboardStats(){
+
+    const reports = getReports();
+
+    const total = reports.length;
+    const pending = reports.filter(r => 
+    r.status === "pending" || r.status === "under-review"
+    ).length;
+    const investigating = reports.filter(r => r.status === "investigating").length;
+    const resolved = reports.filter(r => r.status === "resolved").length;
+
+    const cards = document.querySelectorAll(".cards .card h2");
+
+    if(cards.length >= 4){
+        cards[0].innerText = total;
+        cards[1].innerText = pending;
+        cards[2].innerText = investigating;
+        cards[3].innerText = resolved;
+    }
+}
+
+// ================= VIEW CASE =================
+function viewCase(id){
+
+    const reports = JSON.parse(localStorage.getItem("reports")) || [];
+
+    const r = reports.find(x => x.id.toString() === id.toString());
+
+    if(!r){
+        alert("Case not found");
+        return;
+    }
+
+    currentCaseId = id;
+    updateEvidenceDisplay(id);
+
+    // ================= BASIC =================
+    document.getElementById("caseTitle").innerText = r.id;
+
+    document.getElementById("viewType").innerText = r.type || "N/A";
+    document.getElementById("viewPlatform").innerText = r.platform || "N/A";
+
+    document.getElementById("viewStatus").value = r.status || "pending";
+    document.getElementById("viewSeverity").value = r.severity || "Low";
+
+
+    const investigatorSelect = document.getElementById("viewInvestigator");
+
+if (investigatorSelect) {
+
+    const exists = [...investigatorSelect.options].some(
+        opt => opt.value === r.investigator
+    );
+
+    if (r.investigator && exists) {
+        investigatorSelect.value = r.investigator;
+    } else {
+        investigatorSelect.value = "";
+    }
+}
+
+    // ================= DATE =================
+    document.getElementById("viewDate").innerText =
+        (r.incidentDate || r.date || "N/A") + 
+        " • " + 
+        (r.incidentTime || r.time || "");
+
+    document.getElementById("viewCreated").innerText =
+        r.createdAt || r.submittedAt || r.date || "N/A";
+
+    document.getElementById("viewUpdated").innerText =
+        r.updatedAt || "Not updated";
+
+    // ================= SUMMARY =================
+    document.getElementById("viewSummary").innerText = r.summary || "No summary";
+
+    // ================= REPORTER =================
+    if(r.anonymous){
+        document.getElementById("viewName").innerText = "Anonymous";
+        document.getElementById("viewContact").innerText = "N/A";
+        document.getElementById("viewEmail").innerText = "N/A";
+    }else{
+        document.getElementById("viewName").innerText = r.name || "N/A";
+        document.getElementById("viewContact").innerText = r.contact || "N/A";
+        document.getElementById("viewEmail").innerText = r.email || "N/A";
+    }
+
+    document.getElementById("viewGrade").innerText = r.grade || "N/A";
+    document.getElementById("viewRelationship").innerText = r.relationship || "N/A";
+
+    // ================= SUSPECT =================
+    document.getElementById("viewSuspectName").innerText = r.suspectName || "N/A";
+    document.getElementById("viewSuspectEmail").innerText = r.suspectEmail || "N/A";
+    document.getElementById("viewSuspectPhone").innerText = r.suspectPhone || "N/A";
+    document.getElementById("viewSuspectSocial").innerText = r.suspectSocial || "N/A";
+    document.getElementById("viewSuspectOther").innerText = r.suspectOther || "N/A";
+
+    // ================= EXTRA =================
+    document.getElementById("viewPreferred").innerText = r.contact || "N/A";
+    document.getElementById("viewAvailability").innerText = r.availability || "N/A";
+
+    document.getElementById("viewCaseId").innerText = r.id;
+
+    
+
+
+
+const evidenceBtn = document.getElementById("viewEvidenceBtn");
+const evidenceCount = document.getElementById("evidenceCount");
+
+const files = r.evidence || [];
+
+if (evidenceCount) {
+    evidenceCount.innerText = `${files.length} file${files.length !== 1 ? "s" : ""}`;
+}
+
+if (evidenceBtn) {
+    evidenceBtn.onclick = () => openViewEvidenceModal(currentCaseId);
+}
+
+    showPage("viewCase");
+}
+function saveCaseUpdate(){
+
+  const reports = getReports();
+  const index = reports.findIndex(r => r.id === currentCaseId);
+
+  if(index === -1){
+    alert("Case not found");
+    return;
+  }
+
+  let now = new Date();
+
+  const status = document.getElementById("viewStatus").value;
+  const severity = document.getElementById("viewSeverity").value;
+
+  const investigatorSelect = document.getElementById("viewInvestigator");
+  const investigator = investigatorSelect ? investigatorSelect.value.trim() : "";
+
+  const adminNotes = document.getElementById("admin-notes")?.value || "";
+  const resolution = document.getElementById("resolution")?.value || "";
+
+  // HISTORY
+  if(!reports[index].updates){
+    reports[index].updates = [];
+  }
+
+  reports[index].updates.push({
+    timestamp: now.toLocaleString(),
+    status,
+    adminNotes
+  });
+
+  // MAIN FIELDS
+  reports[index].status = status;
+  reports[index].severity = severity;
+  reports[index].adminNotes = adminNotes;
+  reports[index].resolution = resolution;
+  reports[index].updatedAt = now.toLocaleString();
+
+  // 🔥 IMPORTANT FIX (ASSIGN INVESTIGATOR)
+  reports[index].assignedTo = investigator;
+
+
+
+  localStorage.setItem("reports", JSON.stringify(reports));
+
+  loadAdminCases();
+  loadAdminDashboardStats();
+
+  alert("Case updated successfully!");
+}
+// ================= REPORT TYPE =================
+function loadReportsByType(){
+
+    const reports = getReports();
+    const container = document.getElementById("reportsByTypeContainer");
+
+    if(!container) return;
+
+    container.innerHTML = "";
+
+    const types = {};
+
+    reports.forEach(r => {
+        const t = r.type || "Unknown";
+        types[t] = (types[t] || 0) + 1;
+    });
+
+    for(let t in types){
+        container.innerHTML += `
+            <div class="type-row">
+                <span>${t}</span>
+                <span>${types[t]}</span>
+            </div>
+        `;
+    }
+}
+
+// ================= RECENT REPORTS =================
+function loadInvestigators(){
+
+    const reports = JSON.parse(localStorage.getItem("reports")) || [];
+    const container = document.getElementById("investigatorsContainer");
+    const empty = document.getElementById("investigatorEmpty");
+
+    if(!container || !empty) return;
+
+    const searchValue = (document.getElementById("investigatorSearchInput")?.value || "").toLowerCase();
+
+    const investigators = [
+        { username: "adrian", name: "Det. Adrian Cruz" },
+        { username: "maria", name: "Det. Maria Santos" },
+        { username: "joshua", name: "Det. Joshua Reyes" },
+        { username: "andrea", name: "Det. Andrea Lim" },
+        { username: "carlo", name: "Det. Carlo Mendoza" }
+    ];
+
+    container.innerHTML = "";
+
+    let visibleCount = 0;
+
+    investigators.forEach(inv => {
+
+        // 🔥 SEARCH FILTER (NAME + USERNAME)
+        const matchSearch =
+            inv.name.toLowerCase().includes(searchValue) ||
+            inv.username.toLowerCase().includes(searchValue);
+
+        if(!matchSearch) return;
+
+        visibleCount++;
+
+        // 🔥 CASE FILTER
+        const myCases = reports.filter(r => {
+
+            if(!r || !r.assignedTo) return false;
+
+            const assigned = r.assignedTo.toLowerCase();
+
+            return (
+                assigned === inv.username.toLowerCase() ||
+                assigned === inv.name.toLowerCase()
+            );
+        });
+
+        // 🔥 COUNTING
+        const total = myCases.length;
+
+        const pending = myCases.filter(r => {
+            const s = (r.status || "").toLowerCase();
+            return s === "pending" || s === "under-review";
+        }).length;
+
+        const investigating = myCases.filter(r => 
+            (r.status || "").toLowerCase() === "investigating"
+        ).length;
+
+        const resolved = myCases.filter(r => 
+            (r.status || "").toLowerCase() === "resolved"
+        ).length;
+
+        const rejected = myCases.filter(r => 
+            (r.status || "").toLowerCase() === "rejected"
+        ).length;
+
+        const row = document.createElement("div");
+        row.className = "table-row";
+
+        row.innerHTML = `
+            <span>${inv.name}</span>
+            <span>${total}</span>
+            <span>${pending}</span>
+            <span>${investigating}</span>
+            <span>${resolved}</span>
+            <span>${rejected}</span>
+            <span>
+                
+<button class="action-btn view eye-btn" onclick="viewInvestigator('${inv.username}')">
+  <i class="fa-solid fa-eye-slash eye-icon"></i>
+  <span>View</span>
+</button>
+
+
+
+            </span>
+        `;
+
+        container.appendChild(row);
+    });
+
+    // 🔥 EMPTY STATE FIX
+    if(visibleCount === 0){
+        empty.style.display = "block";
+    } else {
+        empty.style.display = "none";
+    }
+}
+
+
+function filterInvestigators(){
+    const q = document.getElementById("investigatorSearchInput").value.toLowerCase();
+
+    const rows = document.querySelectorAll("#investigatorsContainer .table-row");
+
+    rows.forEach(row => {
+        const name = row.children[0].innerText.toLowerCase();
+        row.style.display = name.includes(q) ? "flex" : "none";
+    });
+}
+
+// ================= WEEKLY CHART =================
+let weeklyChart;
+
+function loadWeeklyChart(){
+
+    const reports = getReports();
+
+    let data = [0,0,0,0,0,0,0];
+    const days = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+
+    reports.forEach(r => {
+        const d = new Date(r.createdAt || r.date);
+        if(!isNaN(d)){
+            data[d.getDay()]++;
+        }
+    });
+
+    const canvas = document.getElementById("weeklyChart");
+    if(!canvas) return;
+
+    if(weeklyChart) weeklyChart.destroy();
+
+    weeklyChart = new Chart(canvas, {
+        type: "line",
+        data: {
+            labels: days,
+            datasets: [{
+                data: data,
+                borderWidth: 2,
+                tension: 0.4,
+                fill: true
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: { legend: { display: false } }
+        }
+    });
+}
+
+// ================= INIT =================
+window.addEventListener("load", () => {
+    loadAdminCases();
+    loadAdminDashboardStats();
+    loadRecentReports();
+    loadReportsByType();
+    loadInvestigatorCases();
+});
+
+
+// ================= EVIDENCE VIEWER CLOSE =================
+const viewer = document.getElementById("evidenceViewer");
+const closeViewer = document.querySelector(".close-viewer");
+
+if(closeViewer){
+    closeViewer.onclick = () => {
+        viewer.style.display = "none";
+    };
+}
+
+window.addEventListener("click", (e) => {
+    if(e.target === viewer){
+        viewer.style.display = "none";
+    }
+});
+
+// ================= LIVE SEARCH (INVESTIGATORS) =================
+document.addEventListener("input", function(e){
+    if(e.target.id === "investigatorSearchInput"){
+        loadInvestigators();
+    }
+});
+
+
+function openViewEvidenceModal(caseId){
+
+    const reports = JSON.parse(localStorage.getItem("reports")) || [];
+    const r = reports.find(x => x.id.toString() === caseId.toString());
+
+    const modal = document.getElementById("evidenceModal");
+    const container = document.getElementById("evidenceContainer");
+
+    if(!r || !modal || !container) return;
+
+    container.innerHTML = "";
+
+    if(!r.evidence || r.evidence.length === 0){
+        container.innerHTML = "<p style='color:#94a3b8;'>No evidence available</p>";
+    } else {
+
+        r.evidence.forEach(file => {
+
+            let el;
+
+            if(file.type.startsWith("image/")){
+                el = document.createElement("img");
+                el.src = file.data;
+            }
+            else if(file.type.startsWith("video/")){
+                el = document.createElement("video");
+                el.src = file.data;
+                el.controls = true;
+            }
+
+            if(el){
+
+                // SAME AS INVESTIGATION PANEL BEHAVIOR
+                el.onclick = () => openZoomViewer(file);
+
+                container.appendChild(el);
+            }
+        });
+    }
+
+    modal.style.display = "block";
+}
+function openZoomViewer(file){
+
+    const modal = document.getElementById("zoomViewer");
+    const content = document.getElementById("zoomContent");
+
+    content.innerHTML = "";
+
+    if(file.type.startsWith("image/")){
+        content.innerHTML = `<img src="${file.data}">`;
+    } else {
+        content.innerHTML = `<video src="${file.data}" controls autoplay></video>`;
+    }
+
+    modal.style.display = "flex";
+}
+
+function closeZoomViewer(){
+    document.getElementById("zoomViewer").style.display = "none";
+    document.getElementById("zoomContent").innerHTML = "";
+}
+
+function closeEvidenceModal(){
+    const modal = document.getElementById("evidenceModal");
+    if(modal){
+        modal.style.display = "none";
+    }
+}
+
+window.addEventListener("click", (e) => {
+    const modal = document.getElementById("evidenceModal");
+
+    if(e.target === modal){
+        modal.style.display = "none";
+    }
+});
+
+function updateEvidenceDisplay(caseId){
+
+    const reports = getReports();
+    const r = reports.find(x => x.id.toString() === caseId.toString());
+
+    const text = document.getElementById("evidenceCountText");
+
+    if(!r || !text) return;
+
+    const count = (r.evidence && Array.isArray(r.evidence)) ? r.evidence.length : 0;
+
+    const label = count === 1 ? "file" : "files";
+
+    text.innerText = `${count} ${label} • View Evidence`;
+}
+
+
+
+// ================= EYE ANIMATION =================
+document.addEventListener("mouseover", function(e){
+    const btn = e.target.closest(".eye-btn");
+    if(!btn) return;
+
+    const icon = btn.querySelector(".eye-icon");
+    if(icon){
+        icon.classList.remove("fa-eye-slash");
+        icon.classList.add("fa-eye");
+    }
+});
+
+document.addEventListener("mouseout", function(e){
+    const btn = e.target.closest(".eye-btn");
+    if(!btn) return;
+
+    const icon = btn.querySelector(".eye-icon");
+    if(icon){
+        icon.classList.remove("fa-eye");
+        icon.classList.add("fa-eye-slash");
+    }
+});
+
+document.addEventListener("input", function(e){
+    if(
+        e.target.id === "searchInput" ||
+        e.target.id === "statusFilter" ||
+        e.target.id === "severityFilter"
+    ){
+        loadAdminCases();
+    }
+});
+
+
+
+document.addEventListener("input", function(e){
+    if(e.target.id === "investigatorSearchInput"){
+        filterInvestigators();
+    }
+});
+
+document.addEventListener("input", function(e){
+    if(e.target.id === "investigatorSearchInput"){
+        loadInvestigators();
+    }
+});
+
+
+function logoutUser(){
+
+    const confirmLogout = confirm("Are you sure you want to logout?");
+    if(!confirmLogout) return;
+
+    // clear session
+    localStorage.removeItem("loggedUser");
+
+    // redirect to login
+    window.location.href = "login.html";
+}
+
+</script>
+
+
+
+</body>
+</html>
