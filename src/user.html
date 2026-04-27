@@ -1,0 +1,1683 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>User Dashboard | CyberGuard</title>
+
+
+<link rel="stylesheet" href="view-case.css">
+<link rel="stylesheet" href="user.css">
+<link rel="stylesheet" href="report.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+<div class="layout">
+
+<!-- SIDEBAR -->
+<div class="sidebar">
+    <div class="logo">
+        <i class="fa-solid fa-shield-halved"></i>
+        <div>
+            <h3>CyberGuard</h3>
+            <p>User Panel</p>
+        </div>
+    </div>
+
+    <ul class="menu">
+        <li class="active" data-page="dashboard" onclick="showPage('dashboard')">
+            <i class="fa fa-home"></i> Dashboard
+        </li>
+        <li data-page="reports" onclick="showPage('reports')">
+            <i class="fa fa-folder"></i> My Reports
+        </li>
+        <li class="logout-btn" onclick="logoutUser()">
+    <i class="fa fa-sign-out-alt"></i> Logout
+</li>
+    </ul>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+<!-- ================= DASHBOARD ================= -->
+<div id="dashboardPage" class="page active">
+    <!-- (WALANG BINAGO DITO) -->
+    <div class="header">
+
+    <div>
+        <h1>Welcome Back</h1>
+        <p>Track your submitted cybercrime reports</p>
+    </div>
+
+   
+
+</div>
+
+<div class="top-actions">
+    <a href="homepage3.html" class="back-btn">
+        <i class="fa fa-arrow-left"></i>
+        Back
+    </a>
+</div>
+
+    <div class="cards">
+        <div class="card">
+            <div class="icon blue"><i class="fa fa-file"></i></div>
+            <div><p>Total Reports</p><h2>3</h2></div>
+        </div>
+
+        <div class="card">
+            <div class="icon yellow"><i class="fa fa-clock"></i></div>
+            <div><p>Pending</p><h2>1</h2></div>
+        </div>
+
+        <div class="card">
+            <div class="icon blue-light"><i class="fa fa-search"></i></div>
+            <div><p>Investigating</p><h2>2</h2></div>
+        </div>
+
+        <div class="card">
+            <div class="icon green"><i class="fa fa-check"></i></div>
+            <div><p>Resolved</p><h2>0</h2></div>
+        </div>
+    </div>
+
+    <div class="grid">
+        <div class="box">
+            <h3>Report Summary</h3>
+        <div id="summaryContainer"></div>
+        </div>
+
+        <div class="box">
+            <h3>Recent Activity</h3>
+
+            <div class="report">
+                <strong>CG-12345</strong>
+                <span class="badge pending">pending</span>
+            </div>
+
+            <div class="report">
+                <strong>CG-67890</strong>
+                <span class="badge investigating">investigating</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ================= MY REPORTS ================= -->
+<div id="reportsPage" class="page">
+
+    <div class="header header-flex">
+        <div>
+            <h1>My Reports</h1>
+            <p>View all your submitted reports</p>
+        </div>
+
+        <!--  FIXED BUTTON -->
+        <button class="primary-btn small" onclick="showPage('report')">
+            <i class="fa fa-plus"></i> New Report
+        </button>
+    </div>
+
+    <div class="box filter-box">
+        <div class="filters">
+
+            <div class="input-group">
+                <label>Search Case ID</label>
+                <div class="search-box">
+                    <i class="fa fa-search"></i>
+                    <input type="text" id="searchInputUser" placeholder="Enter Case ID">
+                </div>
+            </div>
+
+            <div class="input-group">
+    <label>Status</label>
+    <select id="statusFilterUser">
+        <option value="all">All Status</option>
+        <option value="pending">Pending</option>
+        <option value="under-review">Under Review</option>
+        <option value="investigating">Investigating</option>
+        <option value="resolved">Resolved</option>
+        <option value="rejected">Rejected</option>
+    </select>
+</div>
+
+        </div>
+    </div>
+
+    <div class="box">
+        <div class="table-header">
+        <span>Case ID</span>
+        <span>Type</span>
+        <span>Status</span>
+        <span>Date</span>
+        <span>Action</span>
+    </div>
+
+    <!-- DATA -->
+    <div id="userReportsContainer"></div>
+
+    <!-- EMPTY -->
+    <div id="userEmpty" class="empty">
+        <div class="empty-icon">
+            <i class="fa fa-folder-open"></i>
+        </div>
+        <h3>No reports found</h3>
+        <p>You haven't submitted any reports yet.</p>
+
+        <button class="primary-btn small center-btn" onclick="showPage('report')">
+            <i class="fa fa-plus"></i> Submit Your First Report
+        </button>
+    </div>
+    </div>
+
+</div>
+
+
+
+<!-- ================= REPORT PAGE ================= -->
+<div id="reportPage" class="page">
+
+    <div class="navbar">
+        <div class="logo"><i class="fa-solid fa-shield-halved"></i> Report Information</div>
+        <div class="back" onclick="showPage('reports')">
+            <i class="fa fa-arrow-left"></i> Back
+        </div>
+    </div>
+
+    <div class="container">
+      
+        <div class="container">
+
+<div class="stepper">
+<div class="step active"><div class="circle">1</div><h4>Reporter</h4><p>Your details</p></div>
+<div class="step"><div class="circle">2</div><h4>Incident</h4><p>What happened</p></div>
+<div class="step"><div class="circle">3</div><h4>Suspect</h4><p>Who did it</p></div>
+<div class="step"><div class="circle">4</div><h4>Evidence</h4><p>Upload files</p></div>
+<div class="step"><div class="circle">5</div><h4>Consent</h4><p>Final step</p></div>
+</div>
+
+<div class="form-box">
+
+<!-- STEP 1 -->
+<div class="form-step active">
+<h2>Reporter Info</h2>
+<span class="subtitle">Your details</span>
+
+<!-- ANONYMOUS -->
+   <label class="custom-checkbox">
+    <input type="checkbox" id="anonymousCheck">
+    <span class="checkmark"></span>
+
+    <div class="checkbox-text">
+        <strong>Report Anonymously</strong>
+        <p>Your identity will be hidden from the report.</p>
+    </div>
+</label>
+
+<!-- GROUPED FIELDS (para madaling i-hide) -->
+    <div id="personalFields">
+
+        <label>Full Name</label>
+        <input type="text" id="name" placeholder="Your Name">
+
+        <label>Contact Number</label>
+        <input type="text" id="contact" placeholder="+63 XXX XXX XXXX">
+
+        <label>Email Address</label>
+        <input type="email" id="email" placeholder="Your email address">
+
+    </div>
+
+   <!-- OTHER FIELDS -->
+    <label>Grade Level</label>
+    <select id="grade" placeholder="Grade Level">
+        <option value="Grade 7">Grade 7</option>
+        <option value="Grade 8">Grade 8</option>
+        <option value="Grade 9">Grade 9</option>
+        <option value="Grade 10">Grade 10</option>
+        <option value="Grade 11">Grade 11</option>
+        <option value="Grade 12">Grade 12</option>
+    </select>
+
+<label>Address</label>
+<input type="text" id="address" placeholder="Your address">
+
+<label>Relationship to Incident</label>
+    <select id="relationship" placeholder="Select Relationship">
+        <option value="VICTIM">Victim</option>
+        <option value="WITNESS">Witness</option>
+        <option value="THIRD-PARTY">Third Party</option>
+    </select>
+
+
+</div>
+
+
+<!-- STEP 2 -->
+<div class="form-step">
+<h2>Incident</h2>
+<span class="subtitle">What happened</span>
+
+<label>Date & Time</label>
+<input type="datetime-local" id="incidentDate">
+
+<label>Incident Type</label>
+<select id="incidentType">
+    <option value="Cyberbullying">Cyberbullying</option>
+    <option value="Phishing">Phishing</option>
+    <option value="Identity Theft">Identity Theft</option>
+    <option value="Hacking">Hacking</option>
+    <option value="Data Breach">Data Breach</option>
+    <option value="Online Harassment">Online Harassment</option>
+    <option value="Online Scam">Online Scam</option>
+</select>
+
+<label>Platform</label>
+<select id="platform" placeholder="Social Media Platform">
+    <option value="Facebook">Facebook</option>
+    <option value="Instagram">Instagram</option>
+    <option value="Messenger">Messenger</option>
+    <option value="Twitter">Twitter</option>
+    <option value="Linkedln">Linkedln</option>
+    <option value="Tiktok">Tiktok</option>
+    <option value="Others">Others</option>
+</select>
+
+<label>Incident Summary</label>
+<textarea id="summary" placeholder="Describe what happened in detail"></textarea>
+</div>
+
+<!-- STEP 3 -->
+<div class="form-step">
+<h2>Suspect</h2>
+<span class="subtitle">Who did it</span>
+
+<p class="instruction">Provide suspect info if known</p>
+
+<label>Name / Username</label>
+<input type="text" id="suspectName" placeholder="Suspect's name or online handle">
+
+<label>Email</label>
+<input type="text" id="suspectEmail" placeholder="suspect@example.com">
+
+<label>Phone</label>
+<input type="text" id="suspectPhone" placeholder="+63 XXX XXX XXXX">
+
+<label>Social Media Accounts</label>
+<input type="text" id="suspectSocial" placeholder="Facebook, Instagram, Twitter, Messenger, etc.">
+
+<label>Other Identifiers</label>
+<input type="text" id="suspectOther" placeholder="IP address, wallet address, etc.">
+</div>
+
+<!-- STEP 4 -->
+<div class="form-step">
+<h2>Evidence</h2>
+<span class="subtitle">Upload files</span>
+
+<label>Upload Evidence</label>
+
+<div class="upload-box" id="uploadBox">
+    <i class="fa fa-cloud-upload-alt small-icon" id="uploadIcon"></i>
+    <p class="upload-text" id="uploadText">
+        Screenshot / Video recordings / Conversation history / Transaction records
+    </p>
+
+    <input type="file" id="fileInput" multiple>
+
+    <!-- PREVIEW FILES -->
+    <div class="file-preview" id="filePreview"></div>
+</div>
+
+<label>Preferred Contact Method</label>
+<input type="text" id="preferredContact" placeholder="Email, Phone, etc.">
+
+<label>Availability for Interview</label>
+<input type="text" id="availability" placeholder="Weekdays after 3pm, etc.">
+
+<label>Additional Notes</label>
+<textarea id="additionalNotes" placeholder="Any additional information"></textarea>
+</div>
+
+<!-- STEP 5 -->
+<div class="form-step">
+    <h2>Consent</h2>
+    <span class="subtitle">Final step</span>
+
+    <div class="consent-card">
+    <h3>Legal Acknowledgement & Consent</h3>
+
+    <p>
+        <strong>Data Privacy Act Compliance</strong><br>
+        Your personal information will be processed in accordance with the Data Privacy Act. 
+        We will use your data solely for the purpose of investigating this incident.
+    </p>
+
+    <p>
+        <strong>Accuracy of Information</strong><br>
+        I confirm that the information provided in this report is true and accurate to the best of my knowledge.
+    </p>
+
+    <p>
+        <strong>Investigation Agreement</strong><br>
+        I understand that this report will be reviewed by authorized investigators and appropriate action will be taken.
+    </p>
+
+    <label class="custom-checkbox">
+        <input type="checkbox" id="agreeCheck">
+        <span class="checkmark"></span>
+        <div class="checkbox-text">
+            <strong>I have read and understood the terms above.</strong>
+            <p>I consent to the processing of my personal data and agree to the investigation of this incident.</p>
+        </div>
+    </label>
+</div>
+
+</div>
+
+<div class="buttons">
+<button id="prevBtn" onclick="changeStep(-1)">
+<i class="fa fa-arrow-left"></i> Previous
+</button>
+
+<button id="nextBtn" onclick="changeStep(1)">
+Next <i class="fa fa-arrow-right"></i>
+</button>
+</div>
+
+</div>
+</div>
+
+
+    </div>
+
+</div>
+
+
+<!-- ================= CONFIRM MODAL ================= -->
+<div id="confirmModal" class="modal">
+    <div class="modal-content">
+        <h3>Submit Report</h3>
+        <p>Are you sure you want to submit this report?</p>
+
+        <div class="modal-actions">
+            <button class="btn cancel" onclick="closeModal()">Cancel</button>
+            <button class="btn confirm" onclick="submitReport()">Yes, Submit</button>
+        </div>
+    </div>
+</div>
+
+<!-- ================= VIEW CASE ================= -->
+<div id="viewCasePage" class="page">
+
+    <div class="view-header">
+
+    <div class="left">
+        <h2 id="caseTitle"></h2>
+        <p id="caseSubtitle" class="subtitle"></p>
+    </div>
+
+    <button class="back-btn" onclick="showPage('reports')">
+    <i class="fa fa-arrow-left"></i>
+    Back
+</button>
+
+</div>
+
+    
+
+    <div class="case-layout">
+
+        <!-- LEFT SIDE -->
+        <div class="case-left">
+
+            <div class="box incident-card">
+
+    <h3 class="card-title">Incident Details</h3>
+
+    <div class="incident-grid">
+
+        <!-- LEFT -->
+        <div class="incident-item">
+            <span class="label">Type</span>
+            <span class="value" id="viewType"></span>
+        </div>
+
+        <!-- RIGHT -->
+        <div class="incident-item">
+            <span class="label">Platform</span>
+            <span class="value" id="viewPlatform"></span>
+        </div>
+
+       
+
+
+        <!-- DATE -->
+        <div class="incident-item full">
+            <span class="label">Date & Time</span>
+            <span class="value" id="viewDate"></span>
+        </div>
+
+        <!-- LINE -->
+        <div class="divider"></div>
+
+        <!-- SUMMARY -->
+        <div class="incident-item full">
+            <span class="label">Summary</span>
+            <span class="value" id="viewSummary"></span>
+        </div>
+
+    </div>
+
+</div>
+            <div class="box report-info-card">
+
+    <h3 class="card-title">Report Information</h3>
+
+    <div class="info-grid">
+
+        <!-- LEFT SIDE -->
+        <div class="info-item">
+            <span class="label">Name</span>
+            <span class="value" id="viewName"></span>
+        </div>
+
+        <div class="info-item">
+            <span class="label">Grade Level</span>
+            <span class="value" id="viewGrade"></span>
+        </div>
+
+        <div class="info-item">
+            <span class="label">Contact</span>
+            <span class="value" id="viewContact"></span>
+        </div>
+
+        <div class="info-item">
+            <span class="label">Email</span>
+            <span class="value" id="viewEmail"></span>
+        </div>
+
+        <div class="info-item full">
+            <span class="label">Relationship</span>
+            <span class="value" id="viewRelationship"></span>
+        </div>
+
+        
+
+    </div>
+
+</div>
+
+
+<div class="box suspect-card">
+
+    <h3 class="card-title">Suspect Information</h3>
+
+    <div class="info-grid">
+
+        <!-- LEFT -->
+        <div class="info-item">
+            <span class="label">Name</span>
+            <span class="value" id="viewSuspectName"></span>
+        </div>
+
+        <div class="info-item">
+            <span class="label">Email Address</span>
+            <span class="value" id="viewSuspectEmail"></span>
+        </div>
+
+        <div class="info-item">
+            <span class="label">Phone Number</span>
+            <span class="value" id="viewSuspectPhone"></span>
+        </div>
+
+        <!-- RIGHT -->
+        <div class="info-item">
+            <span class="label">Social Media Accounts</span>
+            <span class="value" id="viewSuspectSocial"></span>
+        </div>
+
+        <div class="info-item">
+            <span class="label">Other Identifiers</span>
+            <span class="value" id="viewSuspectOther"></span>
+        </div>
+
+    </div>
+
+</div>
+
+            
+
+        </div>
+
+        <!-- RIGHT SIDE -->
+        <div class="case-right">
+
+<div class="box evidence-card" id="caseEvidence">
+    <h3 class="card-title">Evidence</h3>
+    <div id="viewEvidence" class="evidence-box"></div>
+</div>
+
+
+
+ <!-- Case Tracking Card -->
+    <div class="box user-case-tracking-card" id="caseTrackingCard">
+        <h3 class="timeline-card">Case Timeline</h3>
+        <div class="timeline-container">
+            <div id="userCaseTimeline" class="timeline"></div>
+        </div>
+    </div>
+
+
+        </div>
+
+    </div>
+
+</div>
+
+<div id="previewModal" class="preview-modal">
+    <span class="close-preview">&times;</span>
+    <div id="previewContent"></div>
+</div>
+
+<div id="deleteModal" class="modal">
+    <div class="modal-content">
+        <h3>Delete Report</h3>
+        <p>Are you sure you want to delete this report?</p>
+
+        <div class="modal-actions">
+            <button class="btn cancel" onclick="closeDeleteModal()">Cancel</button>
+            <button class="btn confirm delete-btn" onclick="confirmDelete()">Delete</button>
+        </div>
+    </div>
+</div>
+
+
+
+
+<script>
+
+
+let currentUser = JSON.parse(localStorage.getItem("loggedUser"));
+
+if(!currentUser){
+  window.location.href = "login.html";
+}
+
+let currentCaseId = null;
+let deleteCaseId = null;
+
+// ================= DASHBOARD =================
+function loadDashboardStats(){
+    let allReports = JSON.parse(localStorage.getItem("reports")) || [];
+    let currentUser = JSON.parse(localStorage.getItem("loggedUser"));
+
+    let reports = allReports.filter(r => r.userId === currentUser.id);
+
+    let total = reports.length;
+    let pending = reports.filter(r => r.status === "pending").length;
+    let investigating = reports.filter(r => r.status === "investigating").length;
+    let resolved = reports.filter(r => r.status === "resolved").length;
+
+    const cards = document.querySelectorAll(".cards .card h2");
+
+    if(cards.length >= 4){
+        cards[0].innerText = total;
+        cards[1].innerText = pending;
+        cards[2].innerText = investigating;
+        cards[3].innerText = resolved;
+    }
+}
+
+// ================= SUMMARY =================
+function loadSummary(){
+    let allReports = JSON.parse(localStorage.getItem("reports")) || [];
+    let currentUser = JSON.parse(localStorage.getItem("loggedUser"));
+
+    let reports = allReports.filter(r => r.userId === currentUser.id);
+    const container = document.getElementById("summaryContainer");
+
+    if(!container) return;
+
+    container.innerHTML = "";
+
+    if(reports.length === 0){
+        container.innerHTML = `<p style="font-size:13px;color:#94a3b8;">No report summary found</p>`;
+        return;
+    }
+
+    let summary = {};
+
+    reports.forEach(r => {
+        let type = r.type || "Unknown";
+        summary[type] = (summary[type] || 0) + 1;
+    });
+
+    Object.keys(summary).forEach(type => {
+        container.innerHTML += `
+            <div class="type-row">
+                <span>${type}</span>
+                <span>${summary[type]}</span>
+            </div>
+        `;
+    });
+}
+
+// ================= RECENT =================
+function loadRecent(){
+    let allReports = JSON.parse(localStorage.getItem("reports")) || [];
+    let currentUser = JSON.parse(localStorage.getItem("loggedUser"));
+
+    let reports = allReports.filter(r => r.userId === currentUser.id);
+    const container = document.querySelector("#dashboardPage .grid .box:nth-child(2)");
+
+    if(!container) return;
+
+    container.innerHTML = "<h3>Recent Activity</h3>";
+
+    if(reports.length === 0){
+        container.innerHTML += `<p style="font-size:13px;color:#94a3b8;">No recent activity found</p>`;
+        return;
+    }
+
+    let latest = reports.slice(-5).reverse();
+
+    latest.forEach(r => {
+        container.innerHTML += `
+            <div class="report">
+                <strong>${r.id}</strong>
+                <span class="badge ${r.status}">${r.status}</span>
+            </div>
+        `;
+    });
+}
+
+// ================= USER TABLE =================
+function loadUserReportsTable(){
+
+    let currentUser = JSON.parse(localStorage.getItem("loggedUser"));
+    let reports = JSON.parse(localStorage.getItem("reports")) || [];
+    let myReports = reports.filter(r => r.userId === currentUser.id);
+
+    const container = document.getElementById("userReportsContainer");
+    const empty = document.getElementById("userEmpty");
+
+    if(!container || !empty) return;
+
+    container.innerHTML = "";
+
+   if(myReports.length === 0){
+    empty.style.display = "block";
+    return;
+}
+
+    empty.style.display = "none";
+
+    myReports.forEach(r => {
+        let row = document.createElement("div");
+        row.className = "table-row";
+
+        row.innerHTML = `
+            <span>${r.id}</span>
+            <span>${r.type}</span>
+            <span class="badge ${r.status.replace(" ", "-")}">${r.status}</span>
+            <span>${r.date}</span>
+            <span class="action-view" onclick="viewCase('${r.id}')">
+    <i class="fa fa-eye"></i> View
+</span>
+        `;
+
+        container.appendChild(row);
+    });
+}
+
+
+
+
+// ================= NAV =================
+function showPage(page){
+
+    // ===== EXISTING CODE (wag galawin) =====
+    document.getElementById("dashboardPage").classList.remove("active");
+    document.getElementById("reportsPage").classList.remove("active");
+    document.getElementById("reportPage").classList.remove("active");
+
+    const viewPage = document.getElementById("viewCasePage");
+    if(viewPage) viewPage.classList.remove("active");
+
+    if(page === "dashboard"){
+        document.getElementById("dashboardPage").classList.add("active");
+    } 
+    else if(page === "reports"){
+        document.getElementById("reportsPage").classList.add("active");
+    } 
+    else if(page === "report"){
+        document.getElementById("reportPage").classList.add("active");
+    }
+    else if(page === "viewCase"){
+        if(viewPage) viewPage.classList.add("active");
+    }
+
+    // ===== NEW CODE (para sa menu highlight) =====
+    document.querySelectorAll(".menu li").forEach(item => {
+    item.classList.remove("active");
+
+    if(item.getAttribute("data-page") === page){
+        item.classList.add("active");
+    }
+});
+
+    if(page === "dashboard"){
+        document.querySelector('.menu li[onclick="showPage(\'dashboard\')"]').classList.add("active");
+    }
+    else if(page === "reports"){
+        document.querySelector('.menu li[onclick="showPage(\'reports\')"]').classList.add("active");
+    }
+
+}
+
+// ================= STEPPER =================
+let currentStep = 0;
+const steps = document.querySelectorAll(".step");
+const formSteps = document.querySelectorAll(".form-step");
+
+function showStep(i){
+    formSteps.forEach((s,index)=>{
+        s.classList.remove("active");
+        steps[index].classList.remove("active","completed");
+
+        let circle = steps[index].querySelector(".circle");
+        circle.innerText = index + 1;
+
+        if(index < i){
+            steps[index].classList.add("completed");
+            circle.innerHTML = '<i class="fa fa-check"></i>';
+        }
+
+        if(index === i){
+            steps[index].classList.add("active");
+            s.classList.add("active");
+        }
+    });
+
+    prevBtn.disabled = (i === 0);
+
+    nextBtn.innerHTML = i === formSteps.length - 1
+        ? 'Submit Report <i class="fa fa-check"></i>'
+        : 'Next <i class="fa fa-arrow-right"></i>';
+
+    if(i === formSteps.length - 1){
+        nextBtn.disabled = true;
+        agreeCheck.onchange = () => nextBtn.disabled = !agreeCheck.checked;
+    }else{
+        nextBtn.disabled = false;
+    }
+}
+
+function changeStep(n) {
+
+    // Step 4 validation
+    if(currentStep === 3 && n > 0){
+        const evidenceInput = formSteps[3].querySelector("input[type='file']");
+        const uploadBox = formSteps[3].querySelector(".upload-box");
+
+        if(!evidenceInput.files.length){
+            uploadBox.classList.remove("error");
+            void uploadBox.offsetWidth;
+            uploadBox.classList.add("error");
+            return;
+        } else {
+            uploadBox.classList.remove("error");
+        }
+    }
+
+    currentStep += n;
+
+    //  FIXED HERE
+    if(currentStep >= formSteps.length){
+        submitReport(); //  tawagin na talaga submit
+        return;
+    }
+
+    showStep(currentStep);
+}
+
+// ANONYMOUS TOGGLE
+const anonymousCheck = document.getElementById("anonymousCheck");
+const personalFields = document.getElementById("personalFields");
+
+anonymousCheck.addEventListener("change", ()=>{
+    if(anonymousCheck.checked){
+        personalFields.style.display = "none";
+    }else{
+        personalFields.style.display = "block";
+    }
+});
+
+// =================  FIXED FILE UPLOAD =================
+let uploadedFiles = [];
+
+const fileInput = document.getElementById("fileInput");
+const preview = document.getElementById("filePreview");
+const uploadIcon = document.getElementById("uploadIcon");
+const uploadText = document.getElementById("uploadText");
+
+if(fileInput){
+
+    //  IMPORTANT: reset input BEFORE opening
+    fileInput.addEventListener("click", function(){
+        this.value = null;
+    });
+
+    fileInput.addEventListener("change", function(){
+
+        const files = Array.from(this.files);
+
+        //  REPLACE MODE (hindi add)
+        uploadedFiles = [];
+
+        files.forEach(file => {
+            const reader = new FileReader();
+
+            reader.onload = function(e){
+                uploadedFiles.push({
+                    name: file.name,
+                    type: file.type,
+                    data: e.target.result
+                });
+
+                renderFiles();
+            };
+
+            reader.readAsDataURL(file);
+        });
+    });
+}
+
+function renderFiles(){
+
+    preview.innerHTML = "";
+
+    if(uploadedFiles.length > 0){
+        uploadIcon.style.display = "none";
+        uploadText.style.display = "none";
+    }else{
+        uploadIcon.style.display = "block";
+        uploadText.style.display = "block";
+    }
+
+    uploadedFiles.forEach(file => {
+
+        let item = document.createElement("div");
+        item.className = "file-item";
+
+        if(file.type.startsWith("image/")){
+            item.innerHTML = `<img src="${file.data}" class="preview-img">`;
+        }
+        else if(file.type.startsWith("video/")){
+            item.innerHTML = `<video src="${file.data}" class="preview-video" controls></video>`;
+        }
+        else{
+            item.innerHTML = `<i class="fa fa-file"></i> ${file.name}`;
+        }
+
+        preview.appendChild(item);
+    });
+}
+
+// ================= MODAL =================
+function closeModal(){
+    document.getElementById("confirmModal").style.display = "none";
+}
+
+function submitReport(){
+
+    const now = new Date(); 
+
+    const incidentType = document.getElementById("incidentType").value;
+
+    // ================= USER INPUTS =================
+    const summary = document.getElementById("summary")?.value || "No summary provided";
+    const incidentDate = document.getElementById("incidentDate")?.value || "";
+    const incidentTime = document.getElementById("incidentTime")?.value || "";
+
+    //  REPORTER INFO
+    const name = document.getElementById("name")?.value || "";
+    const contact = document.getElementById("contact")?.value || "";
+    const email = document.getElementById("email")?.value || "";
+    const grade = document.getElementById("grade")?.value || "";
+    const relationship = document.getElementById("relationship")?.value || "";
+
+    //  EXTRA
+    const platform = document.getElementById("platform")?.value || "";
+
+    //  SUSPECT INFO
+    const suspectName = document.getElementById("suspectName")?.value || "";
+    const suspectEmail = document.getElementById("suspectEmail")?.value || "";
+    const suspectPhone = document.getElementById("suspectPhone")?.value || "";
+    const suspectSocial = document.getElementById("suspectSocial")?.value || "";
+    const suspectOther = document.getElementById("suspectOther")?.value || "";
+
+    //  CASE INFO
+    const preferredContact = document.getElementById("preferredContact")?.value || "";
+    const availability = document.getElementById("availability")?.value || "";
+
+    //  ANONYMOUS
+    const anonymous = document.getElementById("anonymousCheck")?.checked || false;
+
+    let reports = JSON.parse(localStorage.getItem("reports")) || [];
+
+    const caseId = "CG-" + Math.floor(10000 + Math.random() * 90000);
+
+    const newReport = {
+    id: caseId,
+    userId: JSON.parse(localStorage.getItem("loggedUser"))?.id || "unknown",
+    type: incidentType,
+    status: "pending", // 🔥 ayusin na rin
+    severity: "Low",
+    assignedTo: "",
+
+    investigatorStatus: "pending",
+
+    //  IMPORTANT (ITO ANG IDAGDAG)
+    createdAt: now.toISOString(),
+
+    //  TIME DATA
+    date: now.toLocaleDateString(),
+    time: now.toLocaleTimeString(),
+    submittedAt: now.toLocaleString(),
+
+    //  INCIDENT
+    summary: summary,
+    incidentDate: incidentDate,
+    incidentTime: incidentTime,
+    platform: platform,
+
+    //  REPORTER
+    name: name,
+    contact: contact,
+    email: email,
+    grade: grade,
+    relationship: relationship,
+    anonymous: anonymous,
+
+    //  SUSPECT
+    suspectName: suspectName,
+    suspectEmail: suspectEmail,
+    suspectPhone: suspectPhone,
+    suspectSocial: suspectSocial,
+    suspectOther: suspectOther,
+
+    //  CASE INFO
+    preferredContact: preferredContact,
+    availability: availability,
+
+    //  ADMIN TRACKING
+    lastUpdated: now.toLocaleString(),
+
+    
+    //  CASE TIMELINE (IMPORTANT)
+updates: [
+    {
+        timestamp: now.toLocaleString(),
+        status: "Pending",
+        adminNotes: ""
+    }
+],
+
+    //  FILES
+    evidence: uploadedFiles || []
+};
+
+    reports.unshift(newReport);
+    localStorage.setItem("reports", JSON.stringify(reports));
+
+    closeModal();
+    alert(" Report submitted successfully!");
+
+    // RESET FILES
+    uploadedFiles = [];
+    renderFiles();
+
+    currentStep = 0;
+    showStep(currentStep);
+
+    // REFRESH UI
+    loadUserReportsTable();
+    loadDashboardStats();
+    loadSummary();
+    loadRecent();
+    resetReportForm();
+}
+
+// ================= USER VIEW CASE =================
+
+function viewUserCase(caseId){
+
+    let reports = JSON.parse(localStorage.getItem("reports")) || [];
+
+    let r = reports.find(rep => rep.id === caseId);
+    if(!r) return;
+
+    currentCaseId = r.id;
+
+    // ===== BASIC INFO =====
+    document.getElementById("caseTitle").innerText = r.id;
+    document.getElementById("viewType").innerText = r.type;
+
+    // fixed:
+document.getElementById("viewDate").innerText =
+    (r.incidentDate || r.date || "N/A") + " • " + (r.incidentTime || r.time || "");
+
+    document.getElementById("viewPlatform").innerText = r.platform || "N/A";
+
+
+    document.getElementById("viewSummary").innerText =
+        r.summary || "No summary provided";
+
+    // ===== REPORTER =====
+    if(r.anonymous){
+        document.getElementById("viewName").innerText = "N/A";
+        document.getElementById("viewContact").innerText = "N/A";
+        document.getElementById("viewEmail").innerText = "N/A";
+         
+    } else {
+        document.getElementById("viewName").innerText = r.name || "N/A";
+        document.getElementById("viewContact").innerText = r.contact || "N/A";
+        document.getElementById("viewEmail").innerText = r.email || "N/A";
+        
+    }
+
+    document.getElementById("viewGrade").innerText = r.grade || "N/A";
+    document.getElementById("viewRelationship").innerText = r.relationship || "N/A";
+
+    // ===== SUSPECT =====
+    document.getElementById("viewSuspectName").innerText = r.suspectName || "N/A";
+    document.getElementById("viewSuspectEmail").innerText = r.suspectEmail || "N/A";
+    document.getElementById("viewSuspectPhone").innerText = r.suspectPhone || "N/A";
+    document.getElementById("viewSuspectSocial").innerText = r.suspectSocial || "N/A";
+    document.getElementById("viewSuspectOther").innerText = r.suspectOther || "N/A";
+
+    // ===== CASE INFO =====
+    document.getElementById("viewCreated").innerText =
+        r.submittedAt || (r.date + " " + (r.time || "")) || "N/A";
+
+    document.getElementById("viewUpdated").innerText =
+        r.updatedAt || "Not yet updated";
+
+    document.getElementById("viewPreferred").innerText =
+r.preferredContact || "N/A";
+
+    document.getElementById("viewAvailability").innerText =
+        r.availability || "N/A";
+
+        document.getElementById("viewStatus").innerText =
+        r.status || "N/A";
+
+        document.getElementById("viewSeverity").innerText =
+        r.severity || "N/A";
+
+        document.getElementById("viewInvestigator").innerText =
+        r.investigator || "N/A";
+
+        document.getElementById("viewCaseId").innerText = r.id || "N/A";
+
+    // ===== EVIDENCE =====
+    const evidenceBox = document.getElementById("viewEvidence");
+    evidenceBox.innerHTML = "";
+
+    if(r.evidence && r.evidence.length > 0){
+        r.evidence.forEach(file => {
+
+            if(file.type.startsWith("image/")){
+                evidenceBox.innerHTML += `<img src="${file.data}">`;
+            }
+            else if(file.type.startsWith("video/")){
+                evidenceBox.innerHTML += `<video src="${file.data}" controls></video>`;
+            }
+            else{
+                evidenceBox.innerHTML += `<div>${file.name}</div>`;
+            }
+
+        });
+    } else {
+        evidenceBox.innerHTML = "<p>No evidence uploaded</p>";
+    }
+
+
+    //  PUNTA SA VIEW PAGE
+    showPage("viewCase");
+     loadUserCaseTimeline(caseId);
+}
+
+// ================= VIEW CASE (FIXED) =================
+function viewCase(caseId){
+
+    let reports = JSON.parse(localStorage.getItem("reports")) || [];
+
+    //  hanapin tamang index
+    let index = reports.findIndex(r => r.id === caseId);
+
+    if(index === -1){
+        alert("Case not found!");
+        return;
+    }
+
+    let r = reports[index];
+    currentCaseId = r.id;
+
+    //  ADD THIS
+const timeline = document.getElementById("userCaseTimeline");
+if(timeline){
+    loadUserCaseTimeline(currentCaseId);
+}
+
+    document.getElementById("caseTitle").innerText = r.id;
+    document.getElementById("viewType").innerText = r.type;
+
+   // fixed:
+let displayDate = r.incidentDate || r.date || "N/A";
+let displayTime = r.incidentTime || r.time || "";
+
+ document.getElementById("viewDate").innerText =
+        r.submittedAt || (r.date + " " + (r.time || "")) || "N/A";
+
+    document.getElementById("viewPlatform").innerText = r.platform || "N/A";
+
+
+
+
+    document.getElementById("caseSubtitle").innerText =
+        "Submitted on " + (r.submittedAt || "N/A");
+
+    document.getElementById("viewSummary").innerText = r.summary || "No summary";
+
+    if(r.anonymous){
+        document.getElementById("viewName").innerText = "N/A";
+        document.getElementById("viewContact").innerText = "N/A";
+        document.getElementById("viewEmail").innerText = "N/A";
+        
+    }else{
+        document.getElementById("viewName").innerText = r.name || "N/A";
+        document.getElementById("viewContact").innerText = r.contact || "N/A";
+        document.getElementById("viewEmail").innerText = r.email || "N/A";
+       
+    }
+
+    document.getElementById("viewGrade").innerText = r.grade || "N/A";
+    document.getElementById("viewRelationship").innerText = r.relationship || "N/A";
+
+    document.getElementById("viewSuspectName").innerText = r.suspectName || "N/A";
+    document.getElementById("viewSuspectEmail").innerText = r.suspectEmail || "N/A";
+    document.getElementById("viewSuspectPhone").innerText = r.suspectPhone || "N/A";
+    document.getElementById("viewSuspectSocial").innerText = r.suspectSocial || "N/A";
+    document.getElementById("viewSuspectOther").innerText = r.suspectOther || "N/A";
+
+   
+
+ 
+
+
+
+   
+
+    const evidenceBox = document.getElementById("viewEvidence");
+evidenceBox.innerHTML = "";
+
+if(r.evidence && r.evidence.length > 0){
+
+    r.evidence.forEach(file => {
+
+        let el;
+
+        if(file.type.startsWith("image/")){
+            el = document.createElement("img");
+            el.src = file.data;
+        } 
+        else if(file.type.startsWith("video/")){
+            el = document.createElement("video");
+            el.src = file.data;
+        } 
+        else {
+            el = document.createElement("div");
+            el.innerText = file.name;
+        }
+
+        //  IMPORTANT: click event dito
+        el.style.cursor = "pointer";
+        el.style.maxWidth = "100px";
+
+        el.addEventListener("click", function(){
+            openPreview(file.data, file.type.startsWith("image/") ? "image" : "video");
+        });
+
+        evidenceBox.appendChild(el);
+    });
+
+}
+
+    showPage("viewCase");
+
+}
+
+
+function openPreview(src, type){
+    const modal = document.getElementById("previewModal");
+    const content = document.getElementById("previewContent");
+
+    if(!modal || !content) return;
+
+    content.innerHTML = "";
+
+    if(type === "image"){
+        content.innerHTML = `<img src="${src}" style="max-width:100%; max-height:100%; border-radius:10px;">`;
+    } else {
+        content.innerHTML = `<video src="${src}" controls autoplay style="max-width:100%; max-height:100%; border-radius:10px;"></video>`;
+    }
+
+    modal.classList.add("show"); // class na nagpapakita at may animation
+}
+
+const closePreview = document.querySelector(".close-preview");
+if(closePreview){
+    closePreview.addEventListener("click", () => {
+        const modal = document.getElementById("previewModal");
+        if(!modal) return;
+        modal.classList.remove("show");
+        setTimeout(()=> {
+            document.getElementById("previewContent").innerHTML = "";
+        }, 300); // wait for transition to finish
+    });
+
+    // click outside
+    const modal = document.getElementById("previewModal");
+    modal.addEventListener("click", (e) => {
+        if(e.target === modal){
+            modal.classList.remove("show");
+            setTimeout(()=> {
+                document.getElementById("previewContent").innerHTML = "";
+            }, 300);
+        }
+    });
+}
+
+
+// ================= LOAD USER REPORTS =================
+function loadUserReports() {
+    const allReports = JSON.parse(localStorage.getItem("reports")) || [];
+    const currentUser = JSON.parse(localStorage.getItem("loggedUser"));
+
+    const reports = allReports.filter(r => r.userId === currentUser.id);
+    const container = document.getElementById("userReportsContainer");
+
+    const searchInput = document.getElementById("searchInputUser");
+    const statusFilter = document.getElementById("statusFilterUser");
+
+    const searchValue = searchInput ? searchInput.value.toLowerCase() : "";
+    const statusValue = statusFilter ? statusFilter.value : "all";
+
+    if(!container) return;
+
+    container.style.opacity = "0";
+    container.innerHTML = "";
+
+    if(reports.length === 0){
+        container.innerHTML = "<p>No reports found</p>";
+        container.style.opacity = "1";
+        return;
+    }
+
+    // SAFE SORT (hindi na magccrash kahit walang createdAt)
+    const sortedReports = [...reports].sort((a, b) => {
+        return new Date(b.createdAt || b.submittedAt || 0) - new Date(a.createdAt || a.submittedAt || 0);
+    });
+
+    const filtered = sortedReports.filter(r => {
+        const id = (r.id || "").toLowerCase();
+        const type = (r.type || "").toLowerCase();
+        const status = r.status || "";
+
+        const matchesSearch =
+            id.includes(searchValue) || type.includes(searchValue);
+
+        const matchesStatus =
+            statusValue === "all" || status === statusValue;
+
+        return matchesSearch && matchesStatus;
+    });
+
+    if(filtered.length === 0){
+        container.innerHTML = "<p>No reports found</p>";
+        container.style.opacity = "1";
+        return;
+    }
+
+    filtered.forEach(r => {
+        const row = document.createElement("div");
+        row.className = "table-row";
+
+        row.innerHTML = `
+            <span>${r.id || "N/A"}</span>
+            <span>${r.type || "N/A"}</span>
+            <span class="badge ${(r.status || "").replace(" ", "-")}">
+    ${r.status || "N/A"}
+</span>
+            <span>${r.date || "N/A"}</span>
+
+            <span class="action-buttons">
+
+    <button class="action-btn view eye-btn" onclick="viewCase('${r.id}')">
+        <i class="fa-solid fa-eye-slash eye-icon"></i>
+        <span>View</span>
+    </button>
+
+    <span class="action-delete" onclick="openDeleteModal('${r.id}')">
+        <i class="fa fa-trash"></i>
+    </span>
+
+</span>
+        `;
+
+        container.appendChild(row);
+    });
+
+    setTimeout(() => {
+        container.style.opacity = "1";
+    }, 50);
+}
+
+function filterUserReports() {
+    const searchValue = document.getElementById("searchInputUser").value.toLowerCase();
+    const statusValue = document.getElementById("statusFilterUser").value;
+
+    const cards = document.querySelectorAll("#userReportsContainer .report-card");
+
+    cards.forEach(card => {
+        const id = card.dataset.id.toString();
+        const status = card.dataset.status;
+
+        const matchesSearch = id.includes(searchValue);
+        const matchesStatus = (statusValue === "all" || status === statusValue);
+
+        card.style.display = (matchesSearch && matchesStatus) ? "flex" : "none";
+    });
+}
+
+// ================= CASE TIMELINE =================
+function loadUserCaseTimeline(caseId){
+
+    const timeline = document.getElementById("userCaseTimeline");
+    if(!timeline) return;
+
+    timeline.innerHTML = "";
+
+    let reports = JSON.parse(localStorage.getItem("reports")) || [];
+    const report = reports.find(r => r.id === caseId);
+
+    if(!report){
+        timeline.innerHTML = "<p>No case found</p>";
+        return;
+    }
+
+    // ================= SUBMITTED =================
+    timeline.innerHTML += `
+        <div class="timeline-item">
+            <div class="timeline-icon" style="background:#3b82f6;">⚡</div>
+            <div class="timeline-content">
+                <h4>Report Submitted</h4>
+                <small>${report.submittedAt || "N/A"}</small>
+                <p>Your report has been successfully submitted and waiting for admin review.</p>
+            </div>
+        </div>
+    `;
+
+    // ================= ADMIN UPDATES =================
+    if(Array.isArray(report.updates) && report.updates.length > 0){
+
+        // sort (old → new)
+        report.updates.sort((a,b)=> new Date(a.timestamp) - new Date(b.timestamp));
+
+        report.updates.forEach(u => {
+
+            let icon = "";
+            let color = "";
+            let message = "";
+
+            switch((u.status || "").toLowerCase()){
+
+                case "pending":
+                    icon = '<i class="fa-solid fa-clock"></i>';
+                    color = "#f59e0b";
+                    message = "Your report is currently under review by admin.";
+                    break;
+
+                case "investigating":
+                    icon = '<i class="fa-solid fa-magnifying-glass"></i>';
+                    color = "#3b82f6";
+                    message = "An investigator has been assigned to your case.";
+                    break;
+
+                case "resolved":
+                    icon = '<i class="fa-solid fa-check"></i>';
+                    color = "#22c55e";
+                    message = "This case has been successfully resolved.";
+                    break;
+
+                case "rejected":
+                    icon = '<i class="fa-solid fa-xmark"></i>';
+                    color = "#ef4444";
+                    message = "This report has been reviewed and rejected.";
+                    break;
+
+                default:
+                    icon = '<i class="fa-solid fa-circle"></i>';
+                    color = "gray";
+                    message = "Status updated.";
+            }
+
+            timeline.innerHTML += `
+                <div class="timeline-item">
+                    <div class="timeline-icon" style="background:${color}">
+                        ${icon}
+                    </div>
+                    <div class="timeline-content">
+                        <h4>${u.status}</h4>
+                        <small>${u.timestamp}</small>
+
+                        <!-- SYSTEM MESSAGE -->
+                        <p>${message}</p>
+
+                        <!-- ADMIN COMMENT -->
+                        ${u.adminNotes ? `
+                            <div class="admin-comment">
+                                <strong>Admin Comment:</strong>
+                                <p>${u.adminNotes}</p>
+                            </div>
+                        ` : ""}
+                    </div>
+                </div>
+            `;
+        });
+
+    } else {
+
+        // ================= NO UPDATES YET =================
+        let icon = '<i class="fa-solid fa-clock"></i>';
+        let color = "#f59e0b";
+
+        timeline.innerHTML += `
+            <div class="timeline-item">
+                <div class="timeline-icon" style="background:${color}">
+                    ${icon}
+                </div>
+                <div class="timeline-content">
+                    <h4>${report.status || "Pending"}</h4>
+                    <small>${report.submittedAt || "N/A"}</small>
+                    <p>Your report is waiting for admin action.</p>
+                </div>
+            </div>
+        `;
+    }
+}
+function resetReportForm(){
+    // Reset text inputs / selects
+    const inputs = [
+        "incidentType","summary","incidentDate","incidentTime","platform",
+        "name","contact","email","grade","relationship",
+        "suspectName","suspectEmail","suspectPhone","suspectSocial","suspectOther",
+        "preferredContact","availability"
+    ];
+
+    inputs.forEach(id => {
+        const el = document.getElementById(id);
+        if(el) el.value = "";
+    });
+
+    // Reset anonymous checkbox
+    const anon = document.getElementById("anonymousCheck");
+    if(anon) {
+        anon.checked = false;
+        personalFields.style.display = "block"; // show personal fields again
+    }
+
+    // Clear uploaded files
+    uploadedFiles = [];
+    renderFiles();
+
+    // Reset stepper
+    currentStep = 0;
+    showStep(currentStep);
+}
+
+document.getElementById("searchInputUser").addEventListener("input", loadUserReports);
+document.getElementById("statusFilterUser").addEventListener("change", loadUserReports);
+
+    // 🔥 initial load ng user reports
+    loadUserReports();
+
+// ================= INIT =================
+showStep(currentStep);
+loadUserReportsTable();
+loadDashboardStats();
+loadSummary();
+loadRecent();
+
+// ================= AUTO REFRESH =================
+setInterval(() => {
+    // Para sa dashboard
+    loadDashboardStats();
+    loadSummary();
+    loadRecent();
+
+    // Para sa user reports table / cards
+    loadUserReportsTable();
+    loadUserReports();
+
+    // Kung nakikita ang view case page, i-refresh rin timeline
+    const viewCasePage = document.getElementById("viewCasePage");
+    if(viewCasePage && viewCasePage.classList.contains("active") && currentCaseId){
+        loadUserCaseTimeline(currentCaseId);
+    }
+}, 3000); // every 3 seconds
+
+function deleteUserReport(caseId){
+
+    const confirmDelete = confirm("Are you sure you want to delete this report?");
+    if(!confirmDelete) return;
+
+    let reports = JSON.parse(localStorage.getItem("reports")) || [];
+
+    // 🔥 remove report
+    reports = reports.filter(r => r.id !== caseId);
+
+    // 🔥 save
+    localStorage.setItem("reports", JSON.stringify(reports));
+
+    // 🔥 refresh lahat
+    loadUserReports();
+    loadUserReportsTable();
+    loadDashboardStats();
+    loadSummary();
+    loadRecent();
+
+    alert("🗑️ Report deleted!");
+}
+
+
+function openDeleteModal(caseId){
+    deleteCaseId = caseId;
+    document.getElementById("deleteModal").style.display = "flex";
+}
+
+function closeDeleteModal(){
+    deleteCaseId = null;
+    document.getElementById("deleteModal").style.display = "none";
+}
+
+function confirmDelete(){
+    if(!deleteCaseId) return;
+
+    let reports = JSON.parse(localStorage.getItem("reports")) || [];
+
+    // delete
+    reports = reports.filter(r => r.id !== deleteCaseId);
+
+    localStorage.setItem("reports", JSON.stringify(reports));
+
+    // refresh UI
+    loadUserReports();
+    loadUserReportsTable();
+    loadDashboardStats();
+    loadSummary();
+    loadRecent();
+
+    closeDeleteModal();
+
+    alert("🗑️ Report deleted successfully!");
+}
+
+
+// ================= EYE ANIMATION =================
+document.addEventListener("mouseover", function(e){
+    const btn = e.target.closest(".eye-btn");
+    if(!btn) return;
+
+    const icon = btn.querySelector(".eye-icon");
+    if(icon){
+        icon.classList.remove("fa-eye-slash");
+        icon.classList.add("fa-eye");
+    }
+});
+
+document.addEventListener("mouseout", function(e){
+    const btn = e.target.closest(".eye-btn");
+    if(!btn) return;
+
+    const icon = btn.querySelector(".eye-icon");
+    if(icon){
+        icon.classList.remove("fa-eye");
+        icon.classList.add("fa-eye-slash");
+    }
+});
+
+function logoutUser(){
+
+    const confirmLogout = confirm("Are you sure you want to logout?");
+    if(!confirmLogout) return;
+
+    // clear session
+    localStorage.removeItem("loggedUser");
+
+    // redirect to login
+    window.location.href = "login.html";
+}
+
+</script> 
+
+</body>
+</html>
