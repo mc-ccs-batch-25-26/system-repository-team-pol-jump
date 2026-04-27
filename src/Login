@@ -65,7 +65,7 @@ function setLogin(type){
   }
 }
 
-/* ✅ SAFE GET USERS */
+/* SAFE GET USERS */
 function getUsers(){
   try{
     let data = localStorage.getItem("users");
@@ -76,12 +76,12 @@ function getUsers(){
   }
 }
 
-/* ✅ SAVE USERS */
+/* SAVE USERS */
 function saveUsers(users){
   localStorage.setItem("users", JSON.stringify(users));
 }
 
-/* ✅ CREATE DEFAULT ADMIN (SAFE) */
+/* CREATE DEFAULT ADMIN (SAFE) */
 (function(){
   let users = getUsers();
 
@@ -107,7 +107,7 @@ function saveUsers(users){
         username: inv.username,
         password: inv.password,
         role:"investigator",
-        name: inv.name // 🔥 REQUIRED
+        name: inv.name // REQUIRED
       });
     }
   });
