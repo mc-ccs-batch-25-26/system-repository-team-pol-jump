@@ -182,8 +182,230 @@ function goToPage(page, direction = "right"){
 </body>
 </html>
 
+/* ===== BODY & BACKGROUND ===== */
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: 'Poppins', sans-serif;
+}
+
+.login-page {
+  position: relative;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+/* Background image layer */
+.login-page::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 120%;
+  height: 120%;
+  background: url('images/mchs.jpg') center/cover no-repeat;
+  filter: blur(8px) brightness(0.6);
+  transform: scale(1.1);
+  animation: moveBackground 30s linear infinite alternate;
+  z-index: -2;
+}
+
+/* Optional overlay for readability */
+.login-page::after {
+  content: "";
+  position: absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background: rgba(0,0,0,0.25);
+  z-index:-1;
+}
+
+/* Background animation */
+@keyframes moveBackground {
+  0% { transform: translate(0px,0px) scale(1.1); }
+  50% { transform: translate(-20px,-10px) scale(1.1); }
+  100% { transform: translate(0px,0px) scale(1.1); }
+}
+
+/* ===== LOGIN CARD ===== */
+.login-card {
+  position: relative;
+  background: rgba(255,255,255,0.85);
+  padding: 40px;
+  width: 350px;
+  border-radius: 12px;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+  z-index: 10;
+  text-align: center;
+}
+
+/* LOGO */
+.login-logo i {
+  font-size: 40px;
+  color: #4f46e5;
+  margin-bottom: 10px;
+}
+
+.login-logo h2 {
+  margin: 5px 0;
+}
+
+.login-logo p {
+  font-size: 14px;
+  color: #555;
+}
+
+/* SWITCH BUTTON */
+.login-switch{
+  display:flex;
+  border:1px solid #ddd;
+  border-radius:6px;
+  overflow:hidden;
+  margin:20px 0;
+}
+
+.login-switch button{
+  flex:1;
+  padding:10px;
+  border:none;
+  background:#f5f5f5;
+  cursor:pointer;
+  font-weight:500;
+  transition: 0.3s;
+}
+
+.login-switch button.active{
+  background:#4f46e5;
+  color:white;
+}
+
+/* INPUTS */
+.input-group{
+  margin-bottom:18px;
+  text-align:left;
+}
+
+.input-group label{
+  font-size:14px;
+  display:block;
+  margin-bottom:6px;
+}
+
+.input-group input{
+  width:100%;
+  padding:10px;
+  border:1px solid #ddd;
+  border-radius:6px;
+  font-size:14px;
+}
+
+.input-group input:focus{
+  outline:none;
+  border-color:#4f46e5;
+}
+
+/* LOGIN BUTTON */
+.login-btn{
+  width:100%;
+  padding:12px;
+  border:none;
+  background:#4f46e5;
+  color:white;
+  border-radius:6px;
+  font-size:15px;
+  cursor:pointer;
+  margin-top:10px;
+  transition:0.3s;
+}
+
+.login-btn:hover{
+  background:#4338ca;
+}
+
+/* REGISTER TEXT */
+.register-text{
+  text-align:center;
+  margin-top:15px;
+  font-size:14px;
+}
+
+.register-text a{
+  color:#4f46e5;
+  text-decoration:none;
+  font-weight:500;
+}
+
+/* PAGE TRANSITION */
+/* PAGE TRANSITION */
+/* ADVANCED PAGE TRANSITION */
+body {
+  opacity: 0;
+  transform: translateX(40px) scale(0.98);
+  filter: blur(6px);
+  transition: 
+    opacity 0.4s ease,
+    transform 0.4s ease,
+    filter 0.4s ease;
+}
+
+/* PAGE ENTER */
+body.show {
+  opacity: 1;
+  transform: translateX(0) scale(1);
+  filter: blur(0);
+}
+
+/* EXIT LEFT */
+body.exit-left {
+  opacity: 0;
+  transform: translateX(-60px) scale(0.96);
+  filter: blur(8px);
+}
+
+/* EXIT RIGHT */
+body.exit-right {
+  opacity: 0;
+  transform: translateX(60px) scale(0.96);
+  filter: blur(8px);
+}
+
+* {
+  backface-visibility: hidden;
+  -webkit-font-smoothing: antialiased;
+}
 
 
+/* CARD ANIMATION */
+.login-card {
+  opacity: 1;
+  transform: translateX(40px) scale(0.95);
+  transition: all 0.4s ease;
+  transform: translateX(0);
+  
+}
+
+
+
+.login-card.show {
+  opacity: 1;
+  transform: translateX(0) scale(1);
+}
+
+.login-card.exit-left {
+  opacity: 0;
+  transform: translateX(-60px) scale(0.9);
+}
+
+.login-card.exit-right {
+  opacity: 0;
+  transform: translateX(60px) scale(0.9);
+}
 
 
 
