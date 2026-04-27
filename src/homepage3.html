@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CyberGuard</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+<style>
+/* GLOBAL */
+*{margin:0;padding:0;box-sizing:border-box;font-family: 'Inter', sans-serif;}
+body{background:#f8fafc;color:#111827;}
+
+/* NAVBAR */
+.navbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:18px 60px;
+    background:rgb(255, 255, 255);
+    border-bottom:1px solid #ffffff;
+}
+.logo{
+    font-size:22px;          /* default size lang, hindi malaki */
+    font-weight:700;         /* bold pero hindi heavy */
+    color:#2563eb;           /* brand blue */
+    letter-spacing:0.5px;    /* subtle spacing for modern look */
+    display:flex;
+    align-items:center;
+    gap:8px;                 /* icon spacing */
+    transition: color 0.3s ease;
+}
+
+.logo:hover{
+    color:#1e40af;           /* slight darker on hover for refinement */
+}
+.nav-links{
+    display:flex;
+    align-items:center;
+    gap:20px;
+}
+.nav-links a{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    text-decoration:none;
+    color:#374151;
+    font-weight:500;
+    font-size:15px;
+    transition:0.3s;
+}
+.nav-links a:hover{color:#2563eb;}
+.nav-links a i{font-size:16px;color:inherit;}
+
+/* HERO */
+.hero{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:80px 60px;
+    background:linear-gradient(to right,#0f172a,#1e293b);
+    color:white;
+}
+.hero-text{max-width:520px;}
+.hero-text h1{font-size:48px;font-weight:700;margin-bottom:15px;line-height:1.2;}
+.hero-text p{font-size:17px;color:#cbd5f5;line-height:1.7;margin-bottom:25px;}
+.buttons{display:flex;gap:15px;}
+.btn-primary{background:#3b82f6;padding:13px 30px;border:none;border-radius:999px;color:white;font-weight:600;cursor:pointer;transition:0.3s;}
+.btn-primary:hover{background:#2563eb;transform:translateY(-2px);}
+.btn-secondary{background:transparent;border:1px solid #94a3b8;padding:13px 30px;border-radius:999px;color:white;cursor:pointer;}
+.hero img{width:420px;border-radius:15px;box-shadow:0 25px 50px rgba(0,0,0,0.4);}
+
+/* SECTION */
+.section{padding:90px 60px;text-align:center;}
+.section h2{font-size:32px;font-weight:700;margin-bottom:10px;}
+.section p{color:#6b7280;font-size:15px;margin-bottom:50px;}
+
+/* GRID TOP 4 CARDS */
+.grid-top{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:25px;
+    max-width:1000px;
+    margin:0 auto;
+}
+.grid-top .card{
+    background:white;
+    padding:28px 20px;
+    border-radius:18px;
+    border:1px solid #e5e7eb;
+    text-align:center;
+    transition:all 0.3s ease;
+    cursor:pointer;
+}
+.grid-top .card:hover{
+    transform:translateY(-6px);
+    box-shadow:0 15px 35px rgba(0,0,0,0.08);
+}
+.grid-top .card .icon{
+    width:60px;height:60px;margin:0 auto 15px auto;
+    display:flex;align-items:center;justify-content:center;
+    font-size:24px;color:#2563eb;background:#e0ecff;border-radius:50%;
+    transition:all 0.3s ease;
+}
+.grid-top .card:hover .icon{transform:scale(1.1);}
+.grid-top .card h4{font-size:17px;font-weight:600;margin-bottom:6px;color:#111827;}
+.grid-top .card p{font-size:14px;color:#6b7280;line-height:1.5;}
+
+/* BOTTOM 3 CARDS CENTERED */
+.grid-bottom-center{
+    display:flex;
+    justify-content:center;
+    gap:25px;
+    flex-wrap:wrap;
+    margin:50px auto 0;
+}
+.grid-bottom-center .card{
+    background:white;
+    padding:28px 20px;
+    border-radius:18px;
+    border:1px solid #e5e7eb;
+    text-align:center;
+    min-width:220px;
+    transition:all 0.3s ease;
+    cursor:pointer;
+}
+.grid-bottom-center .card:hover{
+    transform:translateY(-6px);
+    box-shadow:0 15px 35px rgba(0,0,0,0.08);
+}
+.grid-bottom-center .card .icon{
+    width:60px;height:60px;margin:0 auto 15px auto;
+    display:flex;align-items:center;justify-content:center;
+    font-size:24px;color:#2563eb;background:#e0ecff;border-radius:50%;
+    transition:all 0.3s ease;
+}
+.grid-bottom-center .card:hover .icon{transform:scale(1.1);}
+.grid-bottom-center .card h4{font-size:17px;font-weight:600;margin-bottom:6px;color:#111827;}
+.grid-bottom-center .card p{font-size:14px;color:#6b7280;line-height:1.5;}
+
+/* PROTECT SECTION */
+.protect{background:#f1f5f9;}
+.protect .grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:25px;
+    max-width:1000px;
+    margin:0 auto;
+}
+.protect .card{
+    background:white;
+    padding:28px 20px;
+    border-radius:18px;
+    border:1px solid #e5e7eb;
+    text-align:center;
+    transition:all 0.3s ease;
+    cursor:pointer;
+}
+.protect .card:hover{
+    transform:translateY(-6px);
+    box-shadow:0 15px 35px rgba(0,0,0,0.08);
+}
+.protect .card .icon{
+    width:60px;height:60px;margin:0 auto 15px auto;
+    display:flex;align-items:center;justify-content:center;
+    font-size:24px;color:#2563eb;background:#e0ecff;border-radius:50%;
+    transition:all 0.3s ease;
+}
+.protect .card:hover .icon{transform:scale(1.1);}
+.protect .card h4{font-size:17px;font-weight:600;margin-bottom:6px;color:#111827;}
+.protect .card p{font-size:14px;color:#6b7280;line-height:1.5;}
+
+/* FOOTER */
+.footer{
+    background:#0f172a;color:#94a3b8;text-align:center;padding:25px;font-size:14px;
+}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+    .hero{flex-direction:column;text-align:center;}
+    .hero img{margin-top:30px;width:90%;}
+    .grid-top{grid-template-columns:repeat(2,1fr);}
+    .protect .grid{grid-template-columns:1fr;}
+}
+@media(max-width:500px){
+    .grid-top{grid-template-columns:1fr;}
+}
+
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<div class="navbar">
+    <div class="logo"><i class="fa-solid fa-shield-halved"></i> CyberGuard</div>
+    <div class="nav-links">
+        <a href="#" onclick="goDashboard()">
+    <i class="fa-solid fa-file-lines"></i> My Dashboard
+</a>
+        <a href="#"><i class="fa-solid fa-circle-question"></i> Help</a>
+        <a href="#" onclick="logout()"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+    </div>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+    <div class="hero-text">
+        <h1>Your Safe Space for Digital Reporting</h1>
+        <p>Report cybercrime incidents securely and confidentially. CyberGuard helps students and administrators combat digital threats together.</p>
+        <div class="buttons">
+           <button class="btn-primary" onclick="goReport()">
+    <i class="fa-solid fa-paper-plane"></i> Submit Report
+</button>
+
+<button class="btn-secondary" onclick="goTrack()">
+    <i class="fa-solid fa-magnifying-glass"></i> Track Case
+</button>
+        </div>
+    </div>
+    <img src="https://images.unsplash.com/photo-1510511459019-5dda7724fd87">
+</div>
+
+<!-- WHAT YOU CAN REPORT TOP 4 CARDS -->
+<div class="section">
+    <h2>What You Can Report</h2>
+    <p>We handle various types of cybercrime incidents</p>
+    <div class="grid-top">
+        <div class="card"><div class="icon"><i class="fa-solid fa-envelope-open-text"></i></div><h4>Phishing</h4><p>Fake websites or emails</p></div>
+        <div class="card"><div class="icon"><i class="fa-solid fa-user-shield"></i></div><h4>Cyberbullying</h4><p>Online harassment</p></div>
+        <div class="card"><div class="icon"><i class="fa-solid fa-user-secret"></i></div><h4>Hacking</h4><p>Unauthorized access</p></div>
+        <div class="card"><div class="icon"><i class="fa-solid fa-credit-card"></i></div><h4>Online Scam</h4><p>Fraudulent schemes</p></div>
+    </div>
+
+    <!-- BOTTOM 3 CARDS CENTERED -->
+    <div class="grid-bottom-center">
+        <div class="card"><div class="icon"><i class="fa-solid fa-id-card"></i></div><h4>Identity Theft</h4><p>Stolen personal info</p></div>
+        <div class="card"><div class="icon"><i class="fa-solid fa-database"></i></div><h4>Data Breach</h4><p>Information leaks</p></div>
+        <div class="card"><div class="icon"><i class="fa-solid fa-bug"></i></div><h4>Malware</h4><p>Viruses and threats</p></div>
+    </div>
+</div>
+
+<!-- PROTECT SECTION -->
+<div class="section protect">
+    <h2>How CyberGuard Protects You</h2>
+    <p>Comprehensive incident reporting system designed for your safety</p>
+    <div class="grid">
+        <div class="card"><div class="icon"><i class="fa-solid fa-lock"></i></div><h4>Confidential & Secure</h4><p>Your information is encrypted and protected.</p></div>
+        <div class="card"><div class="icon"><i class="fa-solid fa-chart-line"></i></div><h4>Real-time Tracking</h4><p>Monitor your case status anytime.</p></div>
+        <div class="card"><div class="icon"><i class="fa-solid fa-user-tie"></i></div><h4>Professional Response</h4><p>Handled by trained investigators.</p></div>
+    </div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">© 2026 CyberGuard System</div>
+
+
+
+
+<script>
+
+/* ================= NAVIGATION ONLY ================= */
+function goReport(){
+    window.location.href = "user.html";
+}
+
+function goTrack(){
+    window.location.href = "user.html";
+}
+
+function goDashboard(){
+    window.location.href = "user.html";
+}
+
+/* ================= LOGOUT ================= */
+function logout(){
+    window.location.href = "login.html";
+}
+
+</script>
+</body>
+</html>
