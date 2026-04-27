@@ -1,0 +1,165 @@
+/* ===== BODY & BACKGROUND ===== */
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: 'Poppins', sans-serif;
+}
+
+.register-page {
+  position: relative;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+/* Background image */
+.register-page::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 120%;
+  height: 120%;
+  background: url('images/mchs.jpg') center/cover no-repeat;
+  filter: blur(8px) brightness(0.6);
+  transform: scale(1.1);
+  animation: moveBackground 30s linear infinite alternate;
+  z-index: -2;
+}
+
+/* Overlay */
+.register-page::after {
+  content: "";
+  position: absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background: rgba(0,0,0,0.25);
+  z-index:-1;
+}
+
+/* Background animation */
+@keyframes moveBackground {
+  0% { transform: translate(0,0) scale(1.1); }
+  50% { transform: translate(-20px,-10px) scale(1.1); }
+  100% { transform: translate(0,0) scale(1.1); }
+}
+
+/* ===== REGISTER CARD ===== */
+.register-card {
+  position: relative;
+  background: rgba(255,255,255,0.9);
+  padding: 40px;
+  width: 350px;
+  border-radius: 14px;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+  z-index: 10;
+  text-align: center;
+
+  /* 🔥 ANIMATION */
+  opacity: 1;
+  transform: translateX(40px) scale(0.95);
+  transition: all 0.4s ease;
+}
+
+/* ENTER */
+.register-card.show {
+  opacity: 1;
+  transform: translateX(0) scale(1);
+}
+
+/* EXIT */
+.register-card.exit-left {
+  opacity: 0;
+  transform: translateX(-60px) scale(0.9);
+}
+
+.register-card.exit-right {
+  opacity: 0;
+  transform: translateX(60px) scale(0.9);
+}
+
+/* ===== LOGO ===== */
+.register-logo i {
+  font-size: 40px;
+  color: #4f46e5;
+  margin-bottom: 10px;
+}
+
+.register-logo h2 {
+  margin: 5px 0;
+}
+
+.register-logo p {
+  font-size: 14px;
+  color: #555;
+}
+
+/* ===== INPUTS ===== */
+.input-group {
+  margin-bottom: 18px;
+  text-align: left;
+}
+
+.input-group label {
+  font-size: 14px;
+  display: block;
+  margin-bottom: 6px;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 14px;
+  transition: 0.2s;
+}
+
+.input-group input:focus {
+  outline: none;
+  border-color: #4f46e5;
+  box-shadow: 0 0 0 2px rgba(79,70,229,0.15);
+}
+
+/* ===== BUTTON ===== */
+.register-btn {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  background: #4f46e5;
+  color: white;
+  border-radius: 6px;
+  font-size: 15px;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: 0.3s;
+}
+
+.register-btn:hover {
+  background: #4338ca;
+  transform: translateY(-2px);
+}
+
+/* ===== LOGIN TEXT ===== */
+.login-text {
+  text-align: center;
+  margin-top: 15px;
+  font-size: 14px;
+}
+
+.login-text a {
+  color: #4f46e5;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+/* ===== SMOOTH RENDER ===== */
+* {
+  backface-visibility: hidden;
+  -webkit-font-smoothing: antialiased;
+}
