@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CyberGuard Report</title>
+
+<link rel="stylesheet" href="view-case.css">
+<link rel="stylesheet" href="report.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+<div class="navbar">
+    <div class="logo"><i class="fa-solid fa-shield-halved"></i> CyberGuard</div>
+    <div class="back" onclick="goBack()"><i class="fa fa-arrow-left"></i> Back</div>
+</div>
+
+<div class="container">
+
+<div class="stepper">
+<div class="step active"><div class="circle">1</div><h4>Reporter</h4><p>Your details</p></div>
+<div class="step"><div class="circle">2</div><h4>Incident</h4><p>What happened</p></div>
+<div class="step"><div class="circle">3</div><h4>Suspect</h4><p>Who did it</p></div>
+<div class="step"><div class="circle">4</div><h4>Evidence</h4><p>Upload files</p></div>
+<div class="step"><div class="circle">5</div><h4>Consent</h4><p>Final step</p></div>
+</div>
+
+<div class="form-box">
+
+<!-- STEP 1 -->
+<div class="form-step active">
+<h2>Reporter Info</h2>
+<span class="subtitle">Your details</span>
+
+<!-- ANONYMOUS -->
+    <label class="custom-checkbox">
+    <input type="checkbox" id="anonymousCheck">
+    <span class="checkmark"></span>
+
+    <div class="checkbox-text">
+        <strong>Report Anonymously</strong>
+        <p>Your identity will be hidden from the report.</p>
+    </div>
+</label>
+
+<!-- GROUPED FIELDS (para madaling i-hide) -->
+    <div id="personalFields">
+
+        <label>Full Name</label>
+        <input type="text" placeholder="Your full name">
+
+        <label>Contact Number</label>
+        <input type="text" placeholder="+63 XXX XXX XXXX">
+
+        <label>Email Address</label>
+        <input type="text" placeholder="Your address">
+
+    </div>
+
+   <!-- OTHER FIELDS -->
+    <label>Grade Level</label>
+    <select>
+        <option>Select grade</option>
+        <option>Grade 7</option>
+        <option>Grade 8</option>
+        <option>Grade 9</option>
+        <option>Grade 10</option>
+        <option>Grade 11</option>
+        <option>Grade 12</option>
+    </select>
+
+<label>Address</label>
+<input type="text" placeholder="Your address">
+
+<label>Relationship to Incident</label>
+    <select>
+        <option>Select relationship</option>
+        <option>Victim</option>
+        <option>Witness</option>
+        <option>Third Party</option>
+    </select>
+
+
+</div>
+
+
+<!-- STEP 2 -->
+<div class="form-step">
+<h2>Incident</h2>
+<span class="subtitle">What happened</span>
+
+<label>Date & Time</label>
+<input type="datetime-local">
+
+<label>Incident Type</label>
+<select>
+    <option>Cyberbullying</option>
+    <option>Phishing</option>
+    <option>Identity Theft</option>
+    <option>Hacking</option>
+    <option>Data Breach</option>
+    <option>Online Harassment</option>
+    <option>Online Scam</option>
+</select>
+
+<label>Platform</label>
+<select>
+    <option>Facebook</option>
+    <option>Instagram</option>
+    <option>Messenger</option>
+    <option>Twitter</option>
+    <option>Linkedln</option>
+    <option>Tiktok</option>
+    <option>Others</option>
+</select>
+
+<label>Incident Summary</label>
+<textarea placeholder="Describe what happened in detail"></textarea>
+</div>
+
+<!-- STEP 3 -->
+<div class="form-step">
+<h2>Suspect</h2>
+<span class="subtitle">Who did it</span>
+
+<p class="instruction">Provide suspect info if known</p>
+
+<label>Name / Username</label>
+<input type="text" placeholder="Suspect's name or online handle">
+
+<label>Email</label>
+<input type="text" placeholder="suspect@example.com">
+
+<label>Phone</label>
+<input type="text" placeholder="+63 XXX XXX XXXX">
+
+<label>Social Media Accounts</label>
+<input type="text" placeholder="Facebook, Instagram, Twitter, Messenger, etc.">
+
+<label>Other Identifiers</label>
+<input type="text" placeholder="IP address, wallet address, etc.">
+</div>
+
+<!-- STEP 4 -->
+<div class="form-step">
+<h2>Evidence</h2>
+<span class="subtitle">Upload files</span>
+
+<label>Upload Evidence</label>
+<div class="upload-box">
+    <i class="fa fa-cloud-upload-alt small-icon"></i>
+    <p class="upload-text">Screenshot / Video recordings / Conversation history / Transaction records</p>
+    <input type="file" id="evidenceFile">
+</div>
+
+<label>Preferred Contact Method</label>
+<input type="text" placeholder="Email, Phone, etc.">
+
+<label>Availability for Interview</label>
+<input type="text" placeholder="Weekdays after 3pm, etc.">
+
+<label>Additional Notes</label>
+<textarea placeholder="Any additional information"></textarea>
+</div>
+
+<!-- STEP 5 -->
+<div class="form-step">
+    <h2>Consent</h2>
+    <span class="subtitle">Final step</span>
+
+    <div class="consent-card">
+    <h3>Legal Acknowledgement & Consent</h3>
+
+    <p>
+        <strong>Data Privacy Act Compliance</strong><br>
+        Your personal information will be processed in accordance with the Data Privacy Act. 
+        We will use your data solely for the purpose of investigating this incident.
+    </p>
+
+    <p>
+        <strong>Accuracy of Information</strong><br>
+        I confirm that the information provided in this report is true and accurate to the best of my knowledge.
+    </p>
+
+    <p>
+        <strong>Investigation Agreement</strong><br>
+        I understand that this report will be reviewed by authorized investigators and appropriate action will be taken.
+    </p>
+
+    <label class="custom-checkbox">
+        <input type="checkbox" id="agreeCheck">
+        <span class="checkmark"></span>
+        <div class="checkbox-text">
+            <strong>I have read and understood the terms above.</strong>
+            <p>I consent to the processing of my personal data and agree to the investigation of this incident.</p>
+        </div>
+    </label>
+</div>
+
+</div>
+
+<div class="buttons">
+<button id="prevBtn" onclick="changeStep(-1)">
+<i class="fa fa-arrow-left"></i> Previous
+</button>
+
+<button id="nextBtn" onclick="changeStep(1)">
+Next <i class="fa fa-arrow-right"></i>
+</button>
+</div>
+
+</div>
+</div>
+
+<script>
+
+    let currentCaseId = null;
+let currentStep=0;
+const steps=document.querySelectorAll(".step");
+const formSteps=document.querySelectorAll(".form-step");
+
+
+// labas ng showStep
+const agreeCheck = document.getElementById("agreeCheck");
+
+agreeCheck.addEventListener("change", ()=>{
+    // Kung nasa Step 5, i-update ang button
+    if(currentStep === formSteps.length - 1){
+        nextBtn.disabled = !agreeCheck.checked;
+    }
+});
+
+function showStep(i){
+    formSteps.forEach((s,index)=>{
+        s.classList.remove("active","exit-left","exit-right");
+
+        if(index < i){
+            s.classList.add("exit-left");
+        }
+        else if(index > i){
+            s.classList.add("exit-right");
+        }
+
+        if(index === i){
+            s.classList.add("active");
+        }
+
+        steps[index].classList.remove("active","completed");
+
+        let circle = steps[index].querySelector(".circle");
+        circle.innerText = index + 1;
+
+        if(index < i){
+            steps[index].classList.add("completed");
+            circle.innerHTML = '<i class="fa fa-check"></i>';
+        }
+
+        if(index === i){
+            steps[index].classList.add("active");
+        }
+    });
+
+    prevBtn.disabled = (i === 0);
+
+    nextBtn.innerHTML = i === formSteps.length - 1
+        ? 'Submit Report <i class="fa fa-check"></i>'
+        : 'Next <i class="fa fa-arrow-right"></i>';
+
+    // Step 5 logic lang: huwag i-bind ulit, check lang
+    if(i === formSteps.length - 1){
+        nextBtn.disabled = !agreeCheck.checked;
+    } else {
+        nextBtn.disabled = false;
+    }
+}
+
+function changeStep(n) {
+
+    // Step 4 validation: kung mag-next at wala pang file
+    if(currentStep === 3 && n > 0){ // step index 3 = Evidence
+        const evidenceInput = formSteps[3].querySelector("input[type='file']");
+        const uploadBox = formSteps[3].querySelector(".upload-box");
+
+        if(!evidenceInput.files.length){
+            // Shake + red effect
+            uploadBox.classList.remove("error"); // reset animation
+            void uploadBox.offsetWidth; // trigger reflow
+            uploadBox.classList.add("error");
+            return; // stop next
+        } else {
+            // remove error if file uploaded
+            uploadBox.classList.remove("error");
+        }
+    }
+
+    currentStep += n;
+    if(currentStep >= formSteps.length){
+        alert("Submitted!");
+        return;
+    }
+    showStep(currentStep);
+}
+
+
+
+showStep(currentStep);
+
+// ANONYMOUS TOGGLE
+const anonymousCheck = document.getElementById("anonymousCheck");
+const personalFields = document.getElementById("personalFields");
+
+anonymousCheck.addEventListener("change", ()=>{
+    if(anonymousCheck.checked){
+        personalFields.style.display = "none";
+    }else{
+        personalFields.style.display = "block";
+    }
+});
+
+
+
+
+// ================= EVIDENCE DISPLAY =================
+const evidenceInput = formSteps[3].querySelector("input[type='file']");
+const uploadText = formSteps[3].querySelector(".upload-text");
+const uploadBox = formSteps[3].querySelector(".upload-box");
+const uploadIcon = uploadBox.querySelector("i");
+
+// Preview container
+let previewContainer = document.createElement("div");
+previewContainer.classList.add("file-preview");
+previewContainer.style.marginTop = "10px";
+previewContainer.style.display = "flex";
+previewContainer.style.flexWrap = "wrap";
+previewContainer.style.gap = "10px";
+uploadBox.appendChild(previewContainer);
+
+// Allow multiple files
+evidenceInput.setAttribute("multiple", true);
+
+// Initial state
+if(currentStep === 3){
+    nextBtn.disabled = true;
+}
+
+// CLICK TO RESET AND EDIT FILES
+uploadBox.addEventListener("click", () => {
+    // Only reset if already has files
+    if(evidenceInput.files.length > 0){
+        evidenceInput.value = ""; // clear input
+        previewContainer.innerHTML = "";
+        uploadText.textContent = "Screenshot / Video recordings / Conversation history / Transaction records";
+        uploadText.style.display = "block";
+        uploadIcon.style.display = "inline-block";
+        nextBtn.disabled = true;
+    }
+});
+
+// WHEN USER UPLOADS FILE(S)
+evidenceInput.addEventListener("change", () => {
+    const files = evidenceInput.files;
+
+    // Clear previous preview
+    previewContainer.innerHTML = "";
+
+    if(files.length > 0){
+        nextBtn.disabled = false;
+        uploadBox.classList.remove("error");
+
+        // Hide default icon and text
+        uploadIcon.style.display = "none";
+        uploadText.style.display = "none";
+
+        Array.from(files).forEach(file => {
+            if(file.type.startsWith("image/")){
+                const img = document.createElement("img");
+                img.src = URL.createObjectURL(file);
+                img.style.maxWidth = "100px";
+                img.style.maxHeight = "100px";
+                img.style.borderRadius = "6px";
+                img.title = file.name;
+                previewContainer.appendChild(img);
+            } else {
+                const fileLabel = document.createElement("p");
+                fileLabel.textContent = file.name;
+                fileLabel.style.fontSize = "12px";
+                fileLabel.style.color = "#555";
+                previewContainer.appendChild(fileLabel);
+            }
+        });
+
+    } else {
+        // No file uploaded: show default text and icon
+        uploadText.textContent = "Screenshot / Video recordings / Conversation history / Transaction records";
+        uploadText.style.display = "block";
+        uploadIcon.style.display = "inline-block";
+        nextBtn.disabled = true;
+    }
+});
+
+
+</script>
+
+</body>
+</html>
