@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CyberGuard Register</title>
+
+<link rel="stylesheet" href="register.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body class="register-page">
+
+<div class="register-card" id="authCard">
+
+  <div class="register-logo">
+    <i class="fa-solid fa-shield-halved"></i>
+    <h2>Student Register</h2>
+    <p>CyberGuard Reporting System</p>
+  </div>
+
+  <!-- INPUTS -->
+  <div class="input-group">
+    <label>Full Name</label>
+    <input type="text" id="fullname" placeholder="Enter your full name">
+  </div>
+
+  <div class="input-group">
+    <label>Username</label>
+    <input type="text" id="username" placeholder="Choose a username">
+  </div>
+
+  <div class="input-group">
+    <label>Password</label>
+    <input type="password" id="password" placeholder="Enter password">
+  </div>
+
+  <div class="input-group">
+    <label>Confirm Password</label>
+    <input type="password" id="confirmPassword" placeholder="Confirm password">
+  </div>
+
+  <button class="register-btn" onclick="register()">Register</button>
+
+  <p class="login-text">
+    Already have an account? <a href="#" onclick="goToPage('login.html','left')">Login here</a>
+  </p>
+
+</div>
+
+<script>
+
+/* ===============================
+   ✅ SAFE GET USERS
+=============================== */
+function getUsers(){
+  try{
+    let data = localStorage.getItem("users");
+    return data ? JSON.parse(data) : [];
+  }catch(e){
+    console.log("Corrupted users data, resetting safely...");
+    return [];
+  }
+}
+
+/* ===============================
+   ✅ SAVE USERS (WITH BACKUP)
+=============================== */
+function saveUsers(users){
+  // 🔥 backup bago mag save
+  localStorage.setItem("backup_users", localStorage.getItem("users"));
+  localStorage.setItem("users", JSON.stringify(users));
+}
+
+/* ===============================
+   REGISTER FUNCTION (SAFE)
+=============================== */
+function register(){
+  let fullname = document.getElementById("fullname").value.trim();
+  let username = document.getElementById("username").value.trim();
+  let password = document.getElementById("password").value;
+  let confirmPassword = document.getElementById("confirmPassword").value;
+
+  if(!fullname || !username || !password){
+    alert("Please fill all fields");
+    return;
+  }
+
+  if(password !== confirmPassword){
+    alert("Passwords do not match");
+    return;
+  }
+
+  let users = getUsers();
+
+  // 🔥 prevent duplicate username
+  if(users.some(u => u.username === username)){
+    alert("Username already exists");
+    return;
+  }
+
+  // 🔥 CREATE REAL UNIQUE ACCOUNT
+  let newUser = {
+    id: "u_" + Date.now(),
+    fullname,
+    username,
+    password,
+    role: "student"
+  };
+
+  users.push(newUser);
+  saveUsers(users);
+
+  alert("Account created successfully!");
+
+  goToPage("login.html", "left");
+}
+
+/* ===============================
+   CARD ANIMATION
+=============================== */
+
+// ENTER
+window.addEventListener("DOMContentLoaded", () => {
+  const card = document.getElementById("authCard");
+  if(card){
+    card.classList.add("show");
+  }
+});
+
+// NAVIGATION
+function goToPage(page, direction = "right"){
+  const card = document.getElementById("authCard");
+
+  if(!card){
+    window.location.href = page;
+    return;
+  }
+
+  if(direction === "left"){
+    card.classList.add("exit-left");
+  } else {
+    card.classList.add("exit-right");
+  }
+
+  setTimeout(() => {
+    window.location.href = page;
+  }, 350);
+}
+
+</script>
+
+</body>
+</html>
